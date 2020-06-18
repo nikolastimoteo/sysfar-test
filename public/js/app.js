@@ -50270,21 +50270,21 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  // Axios Config
 
 var axiosInstance = axios.create({
-  baseURL: '/api/v1',
+  baseURL: "/api/v1",
   headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    Accept: "application/json",
+    "Content-Type": "application/json"
   }
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axiosInstance); // Axios Interceptors
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.interceptors.request.use(function (config) {
-  var token = localStorage.getItem('user-token');
-  config.headers.Authorization = token ? "Bearer ".concat(token) : '';
+  var token = localStorage.getItem("user-token");
+  config.headers.Authorization = token ? "Bearer ".concat(token) : "";
   return config;
 });
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#app',
+  el: "#app",
   router: _router__WEBPACK_IMPORTED_MODULE_3__["router"],
   store: _store__WEBPACK_IMPORTED_MODULE_4__["store"],
   render: function render(app) {
@@ -50515,10 +50515,10 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  mode: 'history',
+  mode: "history",
   routes: [{
-    path: '/',
-    name: 'home',
+    path: "/",
+    name: "home",
     component: _pages_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }]
 });
