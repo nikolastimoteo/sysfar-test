@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\v1\LoginFormRequest;
+use JWTAuth;
 
 class AuthController extends Controller
 {
