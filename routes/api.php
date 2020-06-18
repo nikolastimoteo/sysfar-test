@@ -16,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'API\v1', 'prefix' => 'v1'], function () {
     Route::post('auth/login', 'AuthController@login');
+    Route::group(['middleware' => 'auth:api'], function(){
+        Route::post('auth/logout', 'AuthController@logout');
+    });
 });
