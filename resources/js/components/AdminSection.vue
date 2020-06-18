@@ -29,7 +29,7 @@
                   class="user-image"
                   alt="User Image"
                 />
-                <span class="hidden-xs">Nome do Usuário</span>
+                <span class="hidden-xs">{{ user.name }}</span>
               </a>
             </li>
             <!-- Control Sidebar Toggle Button -->
@@ -59,7 +59,7 @@
             />
           </div>
           <div class="pull-left info">
-            <p>Nome do Usuário</p>
+            <p>{{ user.name }}</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
@@ -97,6 +97,11 @@ export default {
       appName: process.env.MIX_APP_NAME,
     }
   },
+  computed: {
+    user() {
+      return this.$store.getters["auth/authUser"];
+    }
+  },
   methods: {
     logout() {
       this.$store
@@ -109,6 +114,10 @@ export default {
           console.error(err);
         });
     }
+  },
+  created() {
+    this.$store
+      .dispatch("auth/getUser");
   }
 };
 </script>

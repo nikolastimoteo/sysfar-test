@@ -35,7 +35,7 @@ class AuthController extends Controller
      * @author Níkolas Timóteo <nikolastps@hotmail.com>
      * @return \Illuminate\Http\JsonResponse
      */
-    public function user()
+    public function getUser()
     {
         return response([
             'user'        => new UserResource(auth('api')->user()),

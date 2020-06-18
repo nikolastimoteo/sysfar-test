@@ -2029,6 +2029,11 @@ __webpack_require__.r(__webpack_exports__);
       appName: "Teste SysFar"
     };
   },
+  computed: {
+    user: function user() {
+      return this.$store.getters["auth/authUser"];
+    }
+  },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -2045,6 +2050,9 @@ __webpack_require__.r(__webpack_exports__);
         console.error(err);
       });
     }
+  },
+  created: function created() {
+    this.$store.dispatch("auth/getUser");
   }
 });
 
@@ -4933,7 +4941,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/** Border active menus */\n.skin-black .sidebar-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu>li.menu-open>a[data-v-601674fe] {\n  border-left-color: #fff;\n}\n\n/** Color active menus */\n.skin-black .sidebar-menu>li:hover>a[data-v-601674fe], .skin-black .sidebar-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu>li.menu-open>a[data-v-601674fe] {\n  color: #fff;\n  background: #1e282c;\n}\n\n/** Color second level menus */\n.skin-black .sidebar-menu .treeview-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu .treeview-menu>li>a[data-v-601674fe]:hover {\n  color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/** Border active menus */\n.skin-black .sidebar-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu>li.menu-open>a[data-v-601674fe] {\n  border-left-color: #fff;\n}\n\n/** Color active menus */\n.skin-black .sidebar-menu>li:hover>a[data-v-601674fe], .skin-black .sidebar-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu>li.menu-open>a[data-v-601674fe] {\n  color: #fff;\n  background: #1e282c;\n}\n\n/** Color second level menus */\n.skin-black .sidebar-menu .treeview-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu .treeview-menu>li>a[data-v-601674fe]:hover {\n  color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -34142,7 +34150,22 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "navbar-custom-menu" }, [
               _c("ul", { staticClass: "nav navbar-nav" }, [
-                _vm._m(1),
+                _c("li", { staticClass: "dropdown user user-menu" }, [
+                  _c("a", { attrs: { href: "#", title: "Meu Perfil" } }, [
+                    _c("img", {
+                      staticClass: "user-image",
+                      attrs: {
+                        src:
+                          "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
+                        alt: "User Image"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "hidden-xs" }, [
+                      _vm._v(_vm._s(_vm.user.name))
+                    ])
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("li", [
                   _c(
@@ -34168,7 +34191,15 @@ var render = function() {
       _vm._v(" "),
       _c("aside", { staticClass: "main-sidebar" }, [
         _c("section", { staticClass: "sidebar" }, [
-          _vm._m(2),
+          _c("div", { staticClass: "user-panel" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-left info" }, [
+              _c("p", [_vm._v(_vm._s(_vm.user.name))]),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "ul",
@@ -34251,45 +34282,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "dropdown user user-menu" }, [
-      _c("a", { attrs: { href: "#", title: "Meu Perfil" } }, [
-        _c("img", {
-          staticClass: "user-image",
-          attrs: {
-            src:
-              "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
-            alt: "User Image"
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "hidden-xs" }, [_vm._v("Nome do Usuário")])
-      ])
+    return _c("div", { staticClass: "pull-left image" }, [
+      _c("img", {
+        staticClass: "img-circle",
+        attrs: {
+          src: "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
+          alt: "User Image"
+        }
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "user-panel" }, [
-      _c("div", { staticClass: "pull-left image" }, [
-        _c("img", {
-          staticClass: "img-circle",
-          attrs: {
-            src:
-              "https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg",
-            alt: "User Image"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "pull-left info" }, [
-        _c("p", [_vm._v("Nome do Usuário")]),
-        _vm._v(" "),
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", { staticClass: "fa fa-circle text-success" }),
-          _vm._v(" Online")
-        ])
-      ])
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-circle text-success" }),
+      _vm._v(" Online")
     ])
   },
   function() {
@@ -51021,6 +51030,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.interceptors.request.use(functi
   config.headers.Authorization = token ? "Bearer ".concat(token) : "";
   return config;
 });
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  var err = error.response;
+
+  if (!err.data.status && err.status === 401 && err.config && !err.config.__isRetryRequest) {
+    localStorage.removeItem("user-token");
+    _router__WEBPACK_IMPORTED_MODULE_3__["router"].push({
+      name: "login"
+    });
+  }
+
+  return Promise.reject(error);
+});
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   router: _router__WEBPACK_IMPORTED_MODULE_3__["router"],
@@ -51586,6 +51609,23 @@ function login(email, password) {
   });
 }
 /**
+ * Sends a GET request for getting the authenticated user.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @return {Promise}
+ */
+
+
+function getUser() {
+  return new Promise(function (resolve, reject) {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get("auth/user").then(function (resp) {
+      resolve(resp);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
+/**
  * Sends a POST request for logging a user out.
  * 
  * @author Níkolas Timóteo <nikolastps@hotmail.com>
@@ -51605,7 +51645,8 @@ function logout() {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   login: login,
-  logout: logout
+  logout: logout,
+  getUser: getUser
 });
 
 /***/ }),
@@ -51625,7 +51666,8 @@ __webpack_require__.r(__webpack_exports__);
 var auth = {
   namespaced: true,
   state: {
-    token: localStorage.getItem("user-token") || ""
+    token: localStorage.getItem("user-token") || "",
+    user: {}
   },
   mutations: {
     set_token: function set_token(state, token) {
@@ -51633,6 +51675,10 @@ var auth = {
     },
     reset_state: function reset_state(state) {
       state.token = "";
+      state.user = {};
+    },
+    set_user: function set_user(state, user) {
+      state.user = user;
     }
   },
   actions: {
@@ -51651,8 +51697,20 @@ var auth = {
         });
       });
     },
-    logout: function logout(_ref2) {
+    getUser: function getUser(_ref2) {
       var commit = _ref2.commit;
+      return new Promise(function (resolve, reject) {
+        _services_auth_service__WEBPACK_IMPORTED_MODULE_0__["default"].getUser().then(function (resp) {
+          var user = resp.data.user;
+          commit("set_user", user);
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    logout: function logout(_ref3) {
+      var commit = _ref3.commit;
       return new Promise(function (resolve, reject) {
         localStorage.removeItem("user-token");
         commit("reset_state");
@@ -51667,6 +51725,9 @@ var auth = {
   getters: {
     isLoggedIn: function isLoggedIn(state) {
       return !!state.token;
+    },
+    authUser: function authUser(state) {
+      return state.user;
     }
   }
 };

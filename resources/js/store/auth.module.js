@@ -3,7 +3,8 @@ import authService from "../services/auth.service";
 export const auth = {
     namespaced: true,
     state: {
-      token: localStorage.getItem("user-token") || ""
+      token: localStorage.getItem("user-token") || "",
+      user: {}
     },
     mutations: {
       set_token(state, token) {
@@ -11,6 +12,10 @@ export const auth = {
       },
       reset_state(state) {
         state.token = "";
+        state.user = {};
+      },
+      set_user(state, user) {
+        state.user = user;
       }
     },
     actions: {
@@ -31,6 +36,20 @@ export const auth = {
             });
         });
       },
+      getUser({ commit }) {
+        return new Promise((resolve, reject) => {
+          authService
+            .getUser()
+            .then(resp => {
+              const user = resp.data.user;
+              commit("set_user", user);
+              resolve(resp);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
+      },
       logout({ commit }) {
         return new Promise((resolve, reject) => {
           localStorage.removeItem("user-token");
@@ -47,6 +66,7 @@ export const auth = {
       }
     },
     getters: {
-      isLoggedIn: state => !!state.token
+      isLoggedIn: state => !!state.token,
+      authUser: state => state.user
     }
   };

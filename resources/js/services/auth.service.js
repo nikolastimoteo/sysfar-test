@@ -25,6 +25,24 @@ function login(email, password) {
 }
 
 /**
+ * Sends a GET request for getting the authenticated user.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @return {Promise}
+ */
+function getUser() {
+  return new Promise((resolve, reject) => {
+    Vue.axios.get("auth/user")
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
+/**
  * Sends a POST request for logging a user out.
  * 
  * @author Níkolas Timóteo <nikolastps@hotmail.com>
@@ -44,5 +62,6 @@ function logout() {
 
 export default {
   login,
-  logout
+  logout,
+  getUser
 }

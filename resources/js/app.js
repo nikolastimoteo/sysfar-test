@@ -21,6 +21,16 @@ Vue.axios.interceptors.request.use(function (config) {
   config.headers.Authorization = token ? `Bearer ${token}` : "";
   return config;
 });
+Vue.axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  const err = error.response;
+  if(!err.data.status && err.status === 401 && err.config && !err.config.__isRetryRequest) {
+      localStorage.removeItem("user-token");
+      router.push({name: "login"});
+  }
+  return Promise.reject(error);
+});
 
 new Vue({
   el: "#app",
