@@ -6,6 +6,23 @@
           <div class="navbar-header">
             <router-link :to="{ name: 'home' }" class="navbar-brand logo" title="Home">{{ appName }}</router-link>
           </div>
+
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li v-if="!isLoggedIn">
+                <router-link :to="{ name: 'login' }" title="Login">
+                  Login
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link :to="{ name: 'home' }" title="Home">
+                  Clients
+                </router-link>
+              </li>
+            </ul>
+          </div>
+          <!-- /.navbar-custom-menu -->
         </nav>
       </header>
       <!-- Full Width Column -->
@@ -40,6 +57,11 @@ export default {
     return {
       appName: process.env.MIX_APP_NAME
     };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["auth/isLoggedIn"];
+    }
   }
 };
 </script>

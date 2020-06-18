@@ -1,6 +1,7 @@
 import authService from "../services/auth.service";
 
-export const authentication = {
+export const auth = {
+    namespaced: true,
     state: {
       token: localStorage.getItem("user-token") || ""
     },
