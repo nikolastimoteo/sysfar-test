@@ -2,7 +2,8 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import App from './components/App.vue';
-import router from './router';
+import { router } from './router';
+import { store } from "./store";
 
 // Axios Config
 const axiosInstance = axios.create({
@@ -24,5 +25,6 @@ Vue.axios.interceptors.request.use(function (config) {
 new Vue({
     el: '#app',
     router: router,
+    store: store,
     render: app => app(App)
 });
