@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ env('APP_NAME')}}</title>
 
         <!-- Styles -->
         <link rel="stylesheet" href="/css/app.css">
     </head>
-    <body>
+    <body class="login-page register-page sidebar-mini skin-black">
 
         <div id="app"></div>
 
