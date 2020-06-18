@@ -9,7 +9,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="/css/app.css">
     </head>
-    <body class="login-page register-page sidebar-mini skin-black">
+    <body class="login-page register-page skin-black">
 
         <div id="app"></div>
 

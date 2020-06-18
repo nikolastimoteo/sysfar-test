@@ -16,8 +16,8 @@
                 </router-link>
               </li>
               <li v-if="isLoggedIn">
-                <router-link :to="{ name: 'home' }" title="Home">
-                  Clients
+                <router-link :to="{ name: 'client-list' }" title="Clientes">
+                  Clientes
                 </router-link>
               </li>
             </ul>
@@ -66,7 +66,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .sidebar-open .content-wrapper,
 .sidebar-open .main-footer {
   transform: none;

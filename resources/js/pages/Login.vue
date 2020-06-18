@@ -58,7 +58,7 @@ export default {
         .dispatch("auth/login", { email, password })
         .then(() => {
           this.loading = false;
-          this.$router.push({ name: "home" });
+          this.$router.push({ name: "client-list" });
         })
         .catch(err => {
           if(err.response && err.response.data.message) {
