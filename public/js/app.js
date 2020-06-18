@@ -50905,9 +50905,27 @@ function login(email, password) {
     });
   });
 }
+/**
+ * Sends a POST request for logging a user out.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @return {Promise}
+ */
+
+
+function logout() {
+  return new Promise(function (resolve, reject) {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.post("auth/logout").then(function (resp) {
+      resolve(resp);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  login: login
+  login: login,
+  logout: logout
 });
 
 /***/ }),
@@ -50949,6 +50967,18 @@ var auth = {
         })["catch"](function (err) {
           commit("reset_state");
           localStorage.removeItem("user-token");
+          reject(err);
+        });
+      });
+    },
+    logout: function logout(_ref2) {
+      var commit = _ref2.commit;
+      return new Promise(function (resolve, reject) {
+        localStorage.removeItem("user-token");
+        commit("reset_state");
+        _services_auth_service__WEBPACK_IMPORTED_MODULE_0__["default"].logout().then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
           reject(err);
         });
       });

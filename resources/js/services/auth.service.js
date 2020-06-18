@@ -24,6 +24,25 @@ function login(email, password) {
   });
 }
 
+/**
+ * Sends a POST request for logging a user out.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @return {Promise}
+ */
+function logout() {
+  return new Promise((resolve, reject) => {
+    Vue.axios.post("auth/logout")
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
 export default {
-  login
+  login,
+  logout
 }

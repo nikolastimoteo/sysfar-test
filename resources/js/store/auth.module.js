@@ -30,6 +30,20 @@ export const auth = {
               reject(err);
             });
         });
+      },
+      logout({ commit }) {
+        return new Promise((resolve, reject) => {
+          localStorage.removeItem("user-token");
+          commit("reset_state");
+          authService
+            .logout()
+            .then(resp => {
+              resolve(resp);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
       }
     },
     getters: {
