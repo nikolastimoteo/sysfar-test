@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\v1\LoginFormRequest;
+use App\Http\Resources\User as UserResource;
 use JWTAuth;
 
 class AuthController extends Controller
@@ -26,6 +27,19 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @author Níkolas Timóteo <nikolastps@hotmail.com>
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function user()
+    {
+        return response([
+            'user'        => new UserResource(auth('api')->user()),
+        ], 200);
     }
 
     /**
