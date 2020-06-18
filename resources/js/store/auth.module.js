@@ -52,8 +52,6 @@ export const auth = {
       },
       logout({ commit }) {
         return new Promise((resolve, reject) => {
-          localStorage.removeItem("user-token");
-          commit("reset_state");
           authService
             .logout()
             .then(resp => {
@@ -61,6 +59,10 @@ export const auth = {
             })
             .catch(err => {
               reject(err);
+            })
+            .finally(() => {
+              localStorage.removeItem("user-token");
+              commit("reset_state");
             });
         });
       }

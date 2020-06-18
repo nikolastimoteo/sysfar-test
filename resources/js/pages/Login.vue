@@ -13,24 +13,48 @@
         <p>{{ errorMessage }}</p>
       </div>
 
-      <form autocomplete="off" @submit.prevent="login">
-        <div class="form-group has-feedback">
-          <input type="email" class="form-control" placeholder="E-mail" v-model="email" required />
-          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-          <input type="password" class="form-control" placeholder="Senha" v-model="password" required />
-          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <button type="submit" class="btn btn-primary btn-block btn-flat" :disabled="loading">
-              Entrar
-            </button>
+      <ValidationObserver ref="form" v-slot="{ handleSubmit, invalid }">
+        <form autocomplete="off" @submit.prevent="handleSubmit(login)">
+          <ValidationProvider v-slot="{ errors }" vid="email" name="email" rules="required|email">
+            <div class="form-group has-feedback" :class="{ 'has-error': errors[0] }">
+              <input
+                v-model="email"
+                type="email"
+                class="form-control"
+                placeholder="E-mail"
+                required
+              />
+              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+              <span v-if="errors" class="help-block">
+                {{ errors[0] }}
+              </span>
+            </div>
+          </ValidationProvider>
+          <ValidationProvider v-slot="{ errors }" vid="password" name="password" rules="required">
+            <div class="form-group has-feedback" :class="{ 'has-error': errors[0] }">
+              <input
+                v-model="password"
+                type="password"
+                class="form-control"
+                placeholder="Senha"
+                required
+              />
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              <span v-if="errors" class="help-block">
+                {{ errors[0] }}
+              </span>
+            </div>
+          </ValidationProvider>
+          <div class="row">
+            <div class="col-xs-12">
+              <button :disabled="invalid && !loading" type="submit" class="btn btn-primary btn-block btn-flat">
+                Entrar
+              </button>
+            </div>
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-        </div>
-      </form>
+        </form>
+      </ValidationObserver>
     </div>
     <!-- /.login-box-body -->
   </div>
@@ -61,8 +85,12 @@ export default {
           this.$router.push({ name: "client-list" });
         })
         .catch(err => {
-          if(err.response && err.response.data.message) {
-            this.errorMessage = err.response.data.message;
+          if (err.response) {
+            if (err.response.data.errors) {
+              this.$refs.form.setErrors(err.response.data.errors);
+            } else if (err.response.data.message) {
+              this.errorMessage = err.response.data.message;
+            }
           }
           this.loading = false;
           console.error(err);

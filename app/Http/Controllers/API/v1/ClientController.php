@@ -38,7 +38,7 @@ class ClientController extends Controller
 
         return response()->json([
             'message' => 'Cliente cadastrado.',
-            'client'   => new ClientResource($client)
+            'client'  => new ClientResource($client)
         ]);
     }
 

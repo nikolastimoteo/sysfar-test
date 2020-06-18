@@ -4,6 +4,8 @@ import VueAxios from "vue-axios";
 import App from "./components/App.vue";
 import { router } from "./router";
 import { store } from "./store";
+import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
 
 // Axios Config
 const axiosInstance = axios.create({
@@ -31,6 +33,26 @@ Vue.axios.interceptors.response.use(function (response) {
   }
   return Promise.reject(error);
 });
+
+// Vee-Validate
+localize("pt_BR");
+localize({
+  pt_BR: {
+    messages: {
+      required: "Campo obrigatório.",
+      email: "E-mail inválido."
+    },
+    // fields: {
+    //   password: {
+    //     required: "teste"
+    //   }
+    // }
+  }
+});
+extend("required", required);
+extend("email", email);
+Vue.component("ValidationProvider", ValidationProvider);
+Vue.component("ValidationObserver", ValidationObserver);
 
 new Vue({
   el: "#app",

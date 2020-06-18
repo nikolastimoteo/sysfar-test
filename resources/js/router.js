@@ -12,6 +12,26 @@ import ClientList from "./pages/admin-section/clients/ClientList.vue";
 
 Vue.use(VueRouter);
 
+// next() if user is authenticated
+const ifAuthenticated = (to, from, next) => {
+	const token = localStorage.getItem("user-token");
+	if (token) {
+		next();
+	} else {
+	  next({name: "login"});
+	}
+}
+
+// next() if user isn't authenticated
+const ifNotAuthenticated = (to, from, next) => {
+	const token = localStorage.getItem('user-token');
+    if (!token) {
+      next();
+    } else {
+      next({name: "admin"});
+    }
+}
+
 export const router = new VueRouter({
   mode: "history",
   routes: [
@@ -23,12 +43,15 @@ export const router = new VueRouter({
     {
 			path: "/login",
 			name: "login",
-			component: Login
+      component: Login,
+      beforeEnter: ifNotAuthenticated,
     },
     {
-			path: "/admin",
+      path: "/admin",
+      name: "admin",
       redirect: "/admin/clientes",
       component: AdminSection,
+      beforeEnter: ifAuthenticated,
 			children: [
 				{
           path: "clientes",
@@ -44,18 +67,4 @@ export const router = new VueRouter({
       ]
     }
   ]
-});
-
-// redirect to login page if unauthenticated user
-// is trying to access a restricted page
-router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/login"];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("user-token");
-
-  if (authRequired && !loggedIn) {
-    next({ name: "login" });
-  } else {
-    next();
-  }
 });
