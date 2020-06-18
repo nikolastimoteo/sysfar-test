@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function getUser()
     {
         return response([
-            'user'        => new UserResource(auth('api')->user()),
+            'user' => new UserResource(auth('api')->user()),
         ], 200);
     }
 

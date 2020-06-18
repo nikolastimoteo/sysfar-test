@@ -17,6 +17,18 @@ class CreateClientFormRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'birth_date' => str_replace('/', '-', $this->birth_date),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -26,7 +38,7 @@ class CreateClientFormRequest extends FormRequest
         return [
             'name'       => 'required|string|min:3',
             'email'      => 'required|email|unique:clients',
-            'birth_date' => 'sometimes|nullable|date_format:"d/m/Y"',
+            'birth_date' => 'sometimes|nullable|date_format:"d-m-Y"',
             'phone'      => 'sometimes|nullable|regex:/\+\d{2}\s\(\d{2}\)\s\d{4,5}\-\d{4}/',
         ];
     }
@@ -44,7 +56,7 @@ class CreateClientFormRequest extends FormRequest
             'unique'      => 'E-mail já cadastrado.',
             'min'         => 'Mínimo :min caracteres.',
             'date_format' => 'Data em formato inválido. Formato aceito: dd/mm/aaaa',
-            'regex'       => 'Número em formato inválido. Formatos aceitos: +99 (99) 99999-9999 ou +99 (99) 9999-9999',
+            'regex'       => 'Telefone em formato inválido. Formatos aceitos: +99 (99) 99999-9999 ou +99 (99) 9999-9999',
         ];
     }
 }
