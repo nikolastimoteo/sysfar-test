@@ -16,12 +16,14 @@ function login(email, password) {
         password: password
       })
       .then(resp => {
-        const token = resp.data.access_token;
-        localStorage.setItem("user-token", token);
         resolve(resp);
       })
       .catch(err => {
         reject(err);
       });
   });
+}
+
+export default {
+  login
 }
