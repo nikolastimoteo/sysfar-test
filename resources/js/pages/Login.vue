@@ -22,7 +22,6 @@
                 type="email"
                 class="form-control"
                 placeholder="E-mail"
-                required
               />
               <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
               <span v-if="errors" class="help-block">
@@ -37,7 +36,6 @@
                 type="password"
                 class="form-control"
                 placeholder="Senha"
-                required
               />
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
               <span v-if="errors" class="help-block">
@@ -47,7 +45,7 @@
           </ValidationProvider>
           <div class="row">
             <div class="col-xs-12">
-              <button :disabled="invalid && !loading" type="submit" class="btn btn-primary btn-block btn-flat">
+              <button :disabled="invalid || loading" type="submit" class="btn btn-primary btn-block btn-flat">
                 Entrar
               </button>
             </div>

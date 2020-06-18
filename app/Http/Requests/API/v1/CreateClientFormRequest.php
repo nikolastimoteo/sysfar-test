@@ -55,8 +55,8 @@ class CreateClientFormRequest extends FormRequest
             'email'       => 'E-mail inválido.',
             'unique'      => 'E-mail já cadastrado.',
             'min'         => 'Mínimo :min caracteres.',
-            'date_format' => 'Data em formato inválido. Formato aceito: dd/mm/aaaa',
-            'regex'       => 'Telefone em formato inválido. Formatos aceitos: +99 (99) 99999-9999 ou +99 (99) 9999-9999',
+            'date_format' => 'Data inválida. Formato aceito: dd/mm/aaaa',
+            'regex'       => 'Telefone inválido. Formatos aceitos: +99 (99) 99999-9999 ou +99 (99) 9999-9999',
         ];
     }
 }

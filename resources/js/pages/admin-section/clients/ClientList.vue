@@ -4,8 +4,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Listagem de Clientes
-        <small>Todos os clientes cadastrados</small>
+        Clientes
+        <small>Listagem de todos os clientes</small>
       </h1>
       <ol class="breadcrumb">
         <li>

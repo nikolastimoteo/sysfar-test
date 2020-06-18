@@ -9,6 +9,7 @@ import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
 // Admin pages
 import ClientList from "./pages/admin-section/clients/ClientList.vue";
+import ClientCreate from "./pages/admin-section/clients/ClientCreate.vue";
 
 Vue.use(VueRouter);
 
@@ -61,6 +62,11 @@ export const router = new VueRouter({
 							path: "",
 							name: "client-list",
 							component: ClientList
+            },
+            {
+							path: 'cadastrar',
+							name: 'client-create',
+							component: ClientCreate
 						}
 					]
         }

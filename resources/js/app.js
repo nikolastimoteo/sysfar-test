@@ -1,11 +1,13 @@
 require("./bootstrap");
 import Vue from "vue";
 import VueAxios from "vue-axios";
+import moment from 'moment';
+import VueMask from 'v-mask';
 import App from "./components/App.vue";
 import { router } from "./router";
 import { store } from "./store";
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { required, email, regex, min, date_format } from "vee-validate/dist/rules";
 
 // Axios Config
 const axiosInstance = axios.create({
@@ -40,19 +42,29 @@ localize({
   pt_BR: {
     messages: {
       required: "Campo obrigatório.",
-      email: "E-mail inválido."
+      email: "E-mail inválido.",
+      date_format: "Data inválida. Formato aceito: dd/mm/aaaa",
+      min: "Mínimo {length} caracteres."
     },
-    // fields: {
-    //   password: {
-    //     required: "teste"
-    //   }
-    // }
+    fields: {
+      phone: {
+        regex: "Telefone inválido. Formatos aceitos: +99 (99) 99999-9999 ou +99 (99) 9999-9999"
+      }
+    }
   }
 });
 extend("required", required);
 extend("email", email);
+extend("regex", regex);
+extend("min", min);
+extend("date_format", value => {
+  return moment(value, 'DD/MM/YYYY', true).isValid();
+});
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
+
+// VueMask
+Vue.use(VueMask);
 
 new Vue({
   el: "#app",
