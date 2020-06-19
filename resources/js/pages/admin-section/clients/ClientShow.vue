@@ -26,6 +26,9 @@
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Dados do Cliente</h3>
+          <div class="box-tools">
+            <button type="button" class="btn btn-flat btn-danger" @click="showDeleteConfirmationModal()" title="Excluir">Excluir</button>
+          </div>
         </div>
 					<!-- /.box-header -->
 					<div class="box-body">
@@ -56,17 +59,29 @@
       <!-- /.box -->
     </section>
     <!-- /.content -->
+    <!-- Delete Confirmation Modal -->
+    <DeleteConfirmationModal v-if="isDeleteConfirmationModalVisible" @close="closeDeleteConfirmationModal" @deleteObject="deleteClient">
+      <template v-slot:body>
+        <p class="text-justify">Deseja confirmar a exclusão deste cliente?</p>
+      </template>
+    </DeleteConfirmationModal>
+    <!-- /Delete Confirmation Modal -->
   </div>
   <!-- /.content-wrapper -->
 </template>
 
 <script>
 import clientService from "../../../services/client.service";
+import DeleteConfirmationModal from "../../../components/DeleteConfirmationModal";
 
 export default {
+  components: {
+    DeleteConfirmationModal
+  },
 	data() {
 		return {
-			client: {}
+      client: {},
+      isDeleteConfirmationModalVisible: false
 		}
 	},
 	methods: {
@@ -84,6 +99,19 @@ export default {
     },
     goToEditClient(id) {
       this.$router.push({ name: 'client-edit', params: { id: id } });
+    },
+    showDeleteConfirmationModal() {
+      this.isDeleteConfirmationModalVisible = true;
+    },
+    closeDeleteConfirmationModal() {
+      this.isDeleteConfirmationModalVisible = false;
+    },
+    deleteClient() {
+      clientService.destroy(this.client.id)
+        .then(() => {
+          this.closeDeleteConfirmationModal();
+          this.$router.push({ name: 'client-list' });
+        });
     }
 	},
 	created() {

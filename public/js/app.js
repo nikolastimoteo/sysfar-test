@@ -2058,6 +2058,63 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DeleteConfirmationModal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    close: function close() {
+      this.$emit("close");
+    },
+    deleteObject: function deleteObject() {
+      this.$emit("deleteObject");
+    }
+  },
+  mounted: function mounted() {
+    // show modal
+    $("#delete-confirmation-modal").modal({
+      backdrop: false,
+      keyboard: false
+    }, "show");
+  },
+  beforeDestroy: function beforeDestroy() {
+    // hide modal
+    $("#delete-confirmation-modal").modal("hide");
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Home.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Home.vue?vue&type=script&lang=js& ***!
@@ -2556,6 +2613,18 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_client_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/client.service */ "./resources/js/services/client.service.js");
+/* harmony import */ var _components_DeleteConfirmationModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/DeleteConfirmationModal */ "./resources/js/components/DeleteConfirmationModal.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2626,10 +2695,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    DeleteConfirmationModal: _components_DeleteConfirmationModal__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
-      paginatedClients: {}
+      paginatedClients: {},
+      selectedClient: {},
+      isDeleteConfirmationModalVisible: false
     };
   },
   methods: {
@@ -2661,6 +2736,23 @@ __webpack_require__.r(__webpack_exports__);
           id: id
         }
       });
+    },
+    showDeleteConfirmationModal: function showDeleteConfirmationModal(client) {
+      this.selectedClient = client;
+      this.isDeleteConfirmationModalVisible = true;
+    },
+    closeDeleteConfirmationModal: function closeDeleteConfirmationModal() {
+      this.selectedClient = {};
+      this.isDeleteConfirmationModalVisible = false;
+    },
+    deleteClient: function deleteClient() {
+      var _this2 = this;
+
+      _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].destroy(this.selectedClient.id).then(function () {
+        _this2.closeDeleteConfirmationModal();
+
+        _this2.loadClients();
+      });
     }
   },
   created: function created() {
@@ -2680,6 +2772,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_client_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/client.service */ "./resources/js/services/client.service.js");
+/* harmony import */ var _components_DeleteConfirmationModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/DeleteConfirmationModal */ "./resources/js/components/DeleteConfirmationModal.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2743,10 +2846,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    DeleteConfirmationModal: _components_DeleteConfirmationModal__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
-      client: {}
+      client: {},
+      isDeleteConfirmationModalVisible: false
     };
   },
   methods: {
@@ -2769,6 +2877,23 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           id: id
         }
+      });
+    },
+    showDeleteConfirmationModal: function showDeleteConfirmationModal() {
+      this.isDeleteConfirmationModalVisible = true;
+    },
+    closeDeleteConfirmationModal: function closeDeleteConfirmationModal() {
+      this.isDeleteConfirmationModalVisible = false;
+    },
+    deleteClient: function deleteClient() {
+      var _this2 = this;
+
+      _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].destroy(this.client.id).then(function () {
+        _this2.closeDeleteConfirmationModal();
+
+        _this2.$router.push({
+          name: 'client-list'
+        });
       });
     }
   },
@@ -5498,6 +5623,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/** Border active menus */\n.skin-black .sidebar-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu>li.menu-open>a[data-v-601674fe] {\n  border-left-color: #fff;\n}\n\n/** Color active menus */\n.skin-black .sidebar-menu>li:hover>a[data-v-601674fe], .skin-black .sidebar-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu>li.menu-open>a[data-v-601674fe] {\n  color: #fff;\n  background: #1e282c;\n}\n\n/** Color second level menus */\n.skin-black .sidebar-menu .treeview-menu>li>a.router-link-active[data-v-601674fe], .skin-black .sidebar-menu .treeview-menu>li>a[data-v-601674fe]:hover {\n  color: #fff;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\np[data-v-67d5ddf2] {\r\n  font-size: 16px;\n}\r\n", ""]);
 
 // exports
 
@@ -55673,6 +55817,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Home.vue?vue&type=style&index=0&id=b3c5cf30&scoped=true&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Home.vue?vue&type=style&index=0&id=b3c5cf30&scoped=true&lang=css& ***!
@@ -59243,6 +59417,90 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal modal-danger fade",
+      staticStyle: { display: "none" },
+      attrs: { id: "delete-confirmation-modal" }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog modal-sm" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Fechar"
+                },
+                on: { click: _vm.close }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            ),
+            _vm._v(" "),
+            _c("h4", { staticClass: "modal-title" }, [
+              _vm._v("Confirmar Exclusão")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [_vm._t("body")], 2),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline pull-left",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  title: "Cancelar"
+                },
+                on: { click: _vm.close }
+              },
+              [_vm._v("Cancelar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline",
+                attrs: { type: "button", title: "Confirmar" },
+                on: { click: _vm.deleteObject }
+              },
+              [_vm._v("Confirmar")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmptyRouterView.vue?vue&type=template&id=1dacd4c0&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmptyRouterView.vue?vue&type=template&id=1dacd4c0& ***!
@@ -60679,112 +60937,167 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content-wrapper" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "box" }, [
-        _c("div", { staticClass: "box-header with-border" }, [
-          _c("div", { staticClass: "box-tools" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-block btn-success btn-flat",
-                attrs: { type: "button", title: "Cadastrar Usuário" },
-                on: {
-                  click: function($event) {
-                    return _vm.goToCreateClient()
+  return _c(
+    "div",
+    { staticClass: "content-wrapper" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("section", { staticClass: "content" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header with-border" }, [
+            _c("div", { staticClass: "box-tools" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-block btn-success btn-flat",
+                  attrs: { type: "button", title: "Cadastrar Cliente" },
+                  on: {
+                    click: function($event) {
+                      return _vm.goToCreateClient()
+                    }
                   }
-                }
-              },
-              [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Cadastrar")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-body table-responsive" }, [
-          _c("table", { staticClass: "table table-hover table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.paginatedClients.data, function(client) {
-                return _c("tr", { key: client.id }, [
-                  _c("td", [_vm._v(_vm._s(client.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(client.email))]),
-                  _vm._v(" "),
-                  client.birth_date
-                    ? _c("td", [
-                        _vm._v(
-                          _vm._s(_vm._f("birthDateAndAge")(client.birth_date))
+                },
+                [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Cadastrar")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body table-responsive" }, [
+            _c("table", { staticClass: "table table-hover table-bordered" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.paginatedClients.data, function(client) {
+                  return _c("tr", { key: client.id }, [
+                    _c("td", [_vm._v(_vm._s(client.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(client.email))]),
+                    _vm._v(" "),
+                    client.birth_date
+                      ? _c("td", [
+                          _vm._v(
+                            _vm._s(_vm._f("birthDateAndAge")(client.birth_date))
+                          )
+                        ])
+                      : _c("td", [_vm._v("(Não informado)")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(client.phone ? client.phone : "(Não informado)")
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("div", { staticClass: "btn-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-flat",
+                            attrs: {
+                              type: "button",
+                              title: "Visualizar Cliente"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.goToShowClient(client.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-eye" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-flat",
+                            attrs: { type: "button", title: "Editar Cliente" },
+                            on: {
+                              click: function($event) {
+                                return _vm.goToEditClient(client.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-flat",
+                            attrs: { type: "button", title: "Excluir Cliente" },
+                            on: {
+                              click: function($event) {
+                                return _vm.showDeleteConfirmationModal(client)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash" })]
                         )
                       ])
-                    : _c("td", [_vm._v("(Não informado)")]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(client.phone ? client.phone : "(Não informado)")
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("div", { staticClass: "btn-group" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary btn-flat",
-                          attrs: {
-                            type: "button",
-                            title: "Visualizar Cliente"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.goToShowClient(client.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fa fa-eye" })]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-flat",
-                          attrs: { type: "button", title: "Editar Cliente" },
-                          on: {
-                            click: function($event) {
-                              return _vm.goToEditClient(client.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fa fa-edit" })]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(2, true)
                     ])
                   ])
-                ])
-              }),
-              0
+                }),
+                0
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "box-footer" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.paginatedClients },
+                on: { "pagination-change-page": _vm.loadClients }
+              })
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.isDeleteConfirmationModalVisible
+        ? _c("DeleteConfirmationModal", {
+            on: {
+              close: _vm.closeDeleteConfirmationModal,
+              deleteObject: _vm.deleteClient
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "body",
+                  fn: function() {
+                    return [
+                      _c("p", [
+                        _c("strong", [_vm._v("Nome:")]),
+                        _vm._v(" " + _vm._s(_vm.selectedClient.name)),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("strong", [_vm._v("E-mail:")]),
+                        _vm._v(
+                          " " + _vm._s(_vm.selectedClient.email) + "\n      "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-justify" }, [
+                        _vm._v("Deseja confirmar a exclusão deste cliente?")
+                      ])
+                    ]
+                  },
+                  proxy: true
+                }
+              ],
+              null,
+              false,
+              3219821130
             )
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-footer" },
-          [
-            _c("pagination", {
-              attrs: { data: _vm.paginatedClients },
-              on: { "pagination-change-page": _vm.loadClients }
-            })
-          ],
-          1
-        )
-      ])
-    ])
-  ])
+          })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -60826,19 +61139,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Ações")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-danger btn-flat",
-        attrs: { type: "button", title: "Excluir Cliente" }
-      },
-      [_c("i", { staticClass: "fa fa-trash" })]
-    )
   }
 ]
 render._withStripped = true
@@ -60862,205 +61162,257 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content-wrapper" }, [
-    _c("section", { staticClass: "content-header" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("ol", { staticClass: "breadcrumb" }, [
-        _vm._m(1),
+  return _c(
+    "div",
+    { staticClass: "content-wrapper" },
+    [
+      _c("section", { staticClass: "content-header" }, [
+        _vm._m(0),
         _vm._v(" "),
-        _c(
-          "li",
-          [
-            _c("router-link", { attrs: { to: { name: "client-list" } } }, [
-              _vm._v("Clientes")
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("li", { staticClass: "active" }, [_vm._v("Visualização")])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "box" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "control-label", attrs: { for: "name" } },
-              [_vm._v("Nome Completo")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.client.name,
-                  expression: "client.name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "name",
-                placeholder: "Não informado",
-                disabled: ""
-              },
-              domProps: { value: _vm.client.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.client, "name", $event.target.value)
-                }
-              }
-            })
-          ]),
+        _c("ol", { staticClass: "breadcrumb" }, [
+          _vm._m(1),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "control-label", attrs: { for: "email" } },
-              [_vm._v("E-mail")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.client.email,
-                  expression: "client.email"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "email",
-                id: "email",
-                placeholder: "Não informado",
-                disabled: ""
-              },
-              domProps: { value: _vm.client.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.client, "email", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "control-label", attrs: { for: "birth_date" } },
-              [_vm._v("Data de Nascimento")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.client.birth_date,
-                  expression: "client.birth_date"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "birth_date",
-                placeholder: "Não informado",
-                disabled: ""
-              },
-              domProps: { value: _vm.client.birth_date },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.client, "birth_date", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              { staticClass: "control-label", attrs: { for: "phone" } },
-              [_vm._v("Telefone")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.client.phone,
-                  expression: "client.phone"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "phone",
-                placeholder: "Não informado",
-                disabled: ""
-              },
-              domProps: { value: _vm.client.phone },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.client, "phone", $event.target.value)
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-footer" }, [
           _c(
-            "button",
-            {
-              staticClass: "btn btn-flat btn-default",
-              attrs: { type: "button", title: "Voltar" },
-              on: {
-                click: function($event) {
-                  return _vm.$router.back()
-                }
-              }
-            },
-            [_vm._v("Voltar")]
+            "li",
+            [
+              _c("router-link", { attrs: { to: { name: "client-list" } } }, [
+                _vm._v("Clientes")
+              ])
+            ],
+            1
           ),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-flat btn-warning pull-right",
-              attrs: { type: "submit", title: "Editar" },
-              on: {
-                click: function($event) {
-                  return _vm.goToEditClient(_vm.client.id)
-                }
-              }
-            },
-            [_vm._v("Editar")]
-          )
+          _c("li", { staticClass: "active" }, [_vm._v("Visualização")])
         ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "content" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header with-border" }, [
+            _c("h3", { staticClass: "box-title" }, [
+              _vm._v("Dados do Cliente")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-flat btn-danger",
+                  attrs: { type: "button", title: "Excluir" },
+                  on: {
+                    click: function($event) {
+                      return _vm.showDeleteConfirmationModal()
+                    }
+                  }
+                },
+                [_vm._v("Excluir")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "name" } },
+                [_vm._v("Nome Completo")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.client.name,
+                    expression: "client.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "name",
+                  placeholder: "Não informado",
+                  disabled: ""
+                },
+                domProps: { value: _vm.client.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.client, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "email" } },
+                [_vm._v("E-mail")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.client.email,
+                    expression: "client.email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "email",
+                  placeholder: "Não informado",
+                  disabled: ""
+                },
+                domProps: { value: _vm.client.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.client, "email", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "birth_date" } },
+                [_vm._v("Data de Nascimento")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.client.birth_date,
+                    expression: "client.birth_date"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "birth_date",
+                  placeholder: "Não informado",
+                  disabled: ""
+                },
+                domProps: { value: _vm.client.birth_date },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.client, "birth_date", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "phone" } },
+                [_vm._v("Telefone")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.client.phone,
+                    expression: "client.phone"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "phone",
+                  placeholder: "Não informado",
+                  disabled: ""
+                },
+                domProps: { value: _vm.client.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.client, "phone", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-flat btn-default",
+                attrs: { type: "button", title: "Voltar" },
+                on: {
+                  click: function($event) {
+                    return _vm.$router.back()
+                  }
+                }
+              },
+              [_vm._v("Voltar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-flat btn-warning pull-right",
+                attrs: { type: "submit", title: "Editar" },
+                on: {
+                  click: function($event) {
+                    return _vm.goToEditClient(_vm.client.id)
+                  }
+                }
+              },
+              [_vm._v("Editar")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.isDeleteConfirmationModalVisible
+        ? _c("DeleteConfirmationModal", {
+            on: {
+              close: _vm.closeDeleteConfirmationModal,
+              deleteObject: _vm.deleteClient
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "body",
+                  fn: function() {
+                    return [
+                      _c("p", { staticClass: "text-justify" }, [
+                        _vm._v("Deseja confirmar a exclusão deste cliente?")
+                      ])
+                    ]
+                  },
+                  proxy: true
+                }
+              ],
+              null,
+              false,
+              849588790
+            )
+          })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -61081,14 +61433,6 @@ var staticRenderFns = [
         _c("i", { staticClass: "fa fa-dashboard" }),
         _vm._v(" Dashboard\n          ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Dados do Cliente")])
     ])
   }
 ]
@@ -77715,6 +78059,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/DeleteConfirmationModal.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/DeleteConfirmationModal.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DeleteConfirmationModal_vue_vue_type_template_id_67d5ddf2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true& */ "./resources/js/components/DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true&");
+/* harmony import */ var _DeleteConfirmationModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteConfirmationModal.vue?vue&type=script&lang=js& */ "./resources/js/components/DeleteConfirmationModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css& */ "./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _DeleteConfirmationModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DeleteConfirmationModal_vue_vue_type_template_id_67d5ddf2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DeleteConfirmationModal_vue_vue_type_template_id_67d5ddf2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "67d5ddf2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/DeleteConfirmationModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/DeleteConfirmationModal.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/DeleteConfirmationModal.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DeleteConfirmationModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=style&index=0&id=67d5ddf2&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_style_index_0_id_67d5ddf2_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_template_id_67d5ddf2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeleteConfirmationModal.vue?vue&type=template&id=67d5ddf2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_template_id_67d5ddf2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirmationModal_vue_vue_type_template_id_67d5ddf2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/EmptyRouterView.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/EmptyRouterView.vue ***!
@@ -78480,12 +78911,31 @@ function update(id, name, email, birth_date, phone) {
     });
   });
 }
+/**
+ * Sends a DELETE request for deleting a client.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {int} id 
+ * @return {Promise}
+ */
+
+
+function destroy(id) {
+  return new Promise(function (resolve, reject) {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios["delete"]("clients/".concat(id)).then(function (resp) {
+      resolve(resp);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   list: list,
   store: store,
   getById: getById,
-  update: update
+  update: update,
+  destroy: destroy
 });
 
 /***/ }),
