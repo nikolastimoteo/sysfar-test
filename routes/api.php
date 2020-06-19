@@ -19,6 +19,7 @@ Route::group(['namespace' => 'API\v1', 'prefix' => 'v1'], function () {
     Route::group(['middleware' => 'auth:api'], function(){
         Route::post('auth/logout', 'AuthController@logout');
         Route::get('auth/user', 'AuthController@getUser');
+        Route::get('clients/search', 'ClientController@search');
         Route::apiResource('clients', 'ClientController');
     });
 });

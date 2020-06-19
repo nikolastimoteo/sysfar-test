@@ -23,7 +23,7 @@ class ClientController extends Controller
 
         return response()->json([
             'paginated_clients' => $clients
-        ]);
+        ], 200);
     }
 
     /**
@@ -123,5 +123,28 @@ class ClientController extends Controller
         return response()->json([
             'message' => 'Cliente não encontrado.'
         ], 404);
+    }
+
+    /**
+     * Searches for a client that matches the query.
+     * 
+     * @param string $query
+     * @param int $page
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        if($search = request()->get('query')) {
+            $clients = Client::where(function($query) use ($search) {
+                $query->where('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('birth_date', date('Y-m-d', strtotime(str_replace('/', '-', $search))));
+            })->orderBy('name', 'ASC')->paginate(20);
+        } else {
+            $clients = Client::paginate(20);
+        }
+        
+        return response()->json([
+            'paginated_clients' => $clients
+        ], 200);
     }
 }
