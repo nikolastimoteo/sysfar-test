@@ -2,7 +2,8 @@ require("./bootstrap");
 import Vue from "vue";
 import VueAxios from "vue-axios";
 import moment from "moment";
-import VueMask from "v-mask";
+//import VueMask from "v-mask";
+import VueTheMask from "vue-the-mask";
 import App from "./components/App.vue";
 import { router } from "./router";
 import { store } from "./store";
@@ -69,11 +70,17 @@ Vue.component("ValidationObserver", ValidationObserver);
 
 // Filters
 Vue.filter("birthDateAndAge", function (date) {
-  return moment(date).format("DD/MM/YYYY") +" ("+ moment().diff(date, "years") +" anos)"
+  return moment(date).format("DD/MM/YYYY") +" ("+ moment().diff(date, "years") +" anos)";
+});
+Vue.filter("birthDate", function (date) {
+  return moment(date).format("DD/MM/YYYY");
 });
 
 // VueMask
-Vue.use(VueMask);
+//Vue.use(VueMask);
+
+// VueTheMask
+Vue.use(VueTheMask);
 
 new Vue({
   el: "#app",

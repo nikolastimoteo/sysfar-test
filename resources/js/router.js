@@ -11,6 +11,7 @@ import Login from "./pages/Login.vue";
 import ClientList from "./pages/admin-section/clients/ClientList.vue";
 import ClientCreate from "./pages/admin-section/clients/ClientCreate.vue";
 import ClientShow from "./pages/admin-section/clients/ClientShow.vue";
+import ClientEdit from "./pages/admin-section/clients/ClientEdit.vue";
 
 Vue.use(VueRouter);
 
@@ -73,6 +74,11 @@ export const router = new VueRouter({
 							path: ':id',
 							name: 'client-show',
 							component: ClientShow
+            },
+            {
+							path: ':id/editar',
+							name: 'client-edit',
+							component: ClientEdit
 						}
 					]
         }

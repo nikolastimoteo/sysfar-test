@@ -46,7 +46,7 @@
                 <td>
                   <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-flat" @click="goToShowClient(client.id)" title="Visualizar Cliente"><i class="fa fa-eye"></i></button>
-                    <button type="button" class="btn btn-warning btn-flat" title="Editar Cliente"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-warning btn-flat" @click="goToEditClient(client.id)" title="Editar Cliente"><i class="fa fa-edit"></i></button>
                     <button type="button" class="btn btn-danger btn-flat" title="Excluir Cliente"><i class="fa fa-trash"></i></button>
                   </div>
                 </td>
@@ -88,6 +88,9 @@ export default {
     },
     goToShowClient(id) {
       this.$router.push({ name: 'client-show', params: { id: id } });
+    },
+    goToEditClient(id) {
+      this.$router.push({ name: 'client-edit', params: { id: id } });
     }
   },
   created() {

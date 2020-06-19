@@ -5,7 +5,7 @@
     <section class="content-header">
       <h1>
         Clientes
-        <small>Cadastro</small>
+        <small>Edição</small>
       </h1>
       <ol class="breadcrumb">
         <li>
@@ -16,7 +16,7 @@
         <li>
           <router-link :to="{ name: 'client-list' }">Clientes</router-link>
         </li>
-        <li class="active">Cadastro</li>
+        <li class="active">Edição</li>
       </ol>
     </section>
 
@@ -25,10 +25,10 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Dados do Novo Cliente</h3>
+          <h3 class="box-title">Dados do Cliente</h3>
         </div>
         <ValidationObserver ref="form" v-slot="{ handleSubmit, invalid }">
-          <form autocomplete="off" @submit.prevent="handleSubmit(storeClient)">
+          <form autocomplete="off" @submit.prevent="handleSubmit(updateClient)">
             <!-- /.box-header -->
             <div class="box-body">
               <ValidationProvider v-slot="{ errors }" vid="name" name="name" rules="required|min:3">
@@ -61,7 +61,7 @@
               <ValidationProvider v-slot="{ errors }" vid="phone" name="phone" :rules="{ regex: /\+\d{2}\s\(\d{2}\)\s\d{4,5}\-\d{4}/ }">
                 <div class="form-group" :class="{ 'has-error': errors[0] }">
                   <label class="control-label" for="phone">Telefone</label>
-                  <input type="tel" class="form-control" id="phone" v-mask="['+55 (##) ####-####', '+55 (##) #####-####']" v-model="form.phone" placeholder="Digite o telefone do cliente" />
+                  <input type="tel" class="form-control" id="phone"  v-mask="['+55 (##) ####-####', '+55 (##) #####-####']" v-model="form.phone" placeholder="Digite o telefone do cliente" />
                   <span v-if="errors" class="help-block">
                     {{ errors[0] }}
                   </span>
@@ -71,7 +71,7 @@
             <!-- /.box-body -->
             <div class="box-footer">
               <button type="button" class="btn btn-flat btn-danger" @click="$router.back()" title="Cancelar">Cancelar</button>
-              <button type="submit" class="btn btn-flat btn-success pull-right" :disabled="invalid || loading" title="Cadastrar">Cadastrar</button>
+              <button type="submit" class="btn btn-flat btn-success pull-right" :disabled="invalid || loading" title="Cadastrar">Salvar Alterações</button>
             </div>
             <!-- /.box-footer-->
           </form>
@@ -92,6 +92,7 @@ export default {
     data() {
         return {
             form: {
+                id: "",
                 name: "",
                 email: "",
                 birth_date: "",
@@ -101,12 +102,26 @@ export default {
         }
     },
     methods: {
-      storeClient() {
+      loadClient() {
+        clientService.getById(this.$route.params.id)
+          .then((resp) => {
+            const client = resp.data.client;
+            this.form.id = client.id;
+            this.form.name = client.name;
+            this.form.email = client.email;
+            this.form.birth_date = client.birth_date ? this.$options.filters.birthDate(client.birth_date) : "";
+            this.form.phone = client.phone;
+          })
+          .catch((err) => {
+            this.$router.back();
+          });
+      },
+      updateClient() {
         this.loading = true;
 
-        const { name, email, birth_date, phone } = this.form;
+        const { id, name, email, birth_date, phone } = this.form;
 
-        clientService.store(name, email, birth_date, phone)
+        clientService.update(id, name, email, birth_date, phone)
           .then(() => {
             this.loading = false;
             this.$router.push({ name: 'client-list' });
@@ -118,6 +133,9 @@ export default {
             }
           });
       }
+    },
+    created() {
+      this.loadClient();
     }
 };
 </script>

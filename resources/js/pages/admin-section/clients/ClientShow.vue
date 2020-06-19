@@ -49,7 +49,7 @@
 					<!-- /.box-body -->
 					<div class="box-footer">
 						<button type="button" class="btn btn-flat btn-default" @click="$router.back()" title="Voltar">Voltar</button>
-						<button type="submit" class="btn btn-flat btn-warning pull-right" title="Editar">Editar</button>
+						<button type="submit" class="btn btn-flat btn-warning pull-right" @click="goToEditClient(client.id)" title="Editar">Editar</button>
 					</div>
 					<!-- /.box-footer-->
       </div>
@@ -81,7 +81,10 @@ export default {
 				.catch(err => {
 					this.$router.back();
 				});
-			}
+    },
+    goToEditClient(id) {
+      this.$router.push({ name: 'client-edit', params: { id: id } });
+    }
 	},
 	created() {
 		this.loadClient();

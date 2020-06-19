@@ -2388,6 +2388,164 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_client_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/client.service */ "./resources/js/services/client.service.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      form: {
+        id: "",
+        name: "",
+        email: "",
+        birth_date: "",
+        phone: ""
+      },
+      loading: false
+    };
+  },
+  methods: {
+    loadClient: function loadClient() {
+      var _this = this;
+
+      _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].getById(this.$route.params.id).then(function (resp) {
+        var client = resp.data.client;
+        _this.form.id = client.id;
+        _this.form.name = client.name;
+        _this.form.email = client.email;
+        _this.form.birth_date = client.birth_date ? _this.$options.filters.birthDate(client.birth_date) : "";
+        _this.form.phone = client.phone;
+      })["catch"](function (err) {
+        _this.$router.back();
+      });
+    },
+    updateClient: function updateClient() {
+      var _this2 = this;
+
+      this.loading = true;
+      var _this$form = this.form,
+          id = _this$form.id,
+          name = _this$form.name,
+          email = _this$form.email,
+          birth_date = _this$form.birth_date,
+          phone = _this$form.phone;
+      _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].update(id, name, email, birth_date, phone).then(function () {
+        _this2.loading = false;
+
+        _this2.$router.push({
+          name: 'client-list'
+        });
+      })["catch"](function (err) {
+        _this2.loading = false;
+
+        if (err.response && err.response.data.errors) {
+          _this2.$refs.form.setErrors(err.response.data.errors);
+        }
+      });
+    }
+  },
+  created: function created() {
+    this.loadClient();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin-section/clients/ClientList.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin-section/clients/ClientList.vue?vue&type=script&lang=js& ***!
@@ -2495,6 +2653,14 @@ __webpack_require__.r(__webpack_exports__);
           id: id
         }
       });
+    },
+    goToEditClient: function goToEditClient(id) {
+      this.$router.push({
+        name: 'client-edit',
+        params: {
+          id: id
+        }
+      });
     }
   },
   created: function created() {
@@ -2595,6 +2761,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (err) {
         _this.$router.back();
+      });
+    },
+    goToEditClient: function goToEditClient(id) {
+      this.$router.push({
+        name: 'client-edit',
+        params: {
+          id: id
+        }
       });
     }
   },
@@ -56113,528 +56287,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/v-mask/dist/v-mask.esm.js":
-/*!************************************************!*\
-  !*** ./node_modules/v-mask/dist/v-mask.esm.js ***!
-  \************************************************/
-/*! exports provided: default, VueMaskDirective, VueMaskFilter, VueMaskPlugin */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskDirective", function() { return directive; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskFilter", function() { return filter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskPlugin", function() { return plugin; });
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-var placeholderChar = '_';
-var strFunction = 'function';
-
-var emptyArray = [];
-function convertMaskToPlaceholder() {
-  var mask = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyArray;
-  var placeholderChar$1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : placeholderChar;
-
-  if (!isArray(mask)) {
-    throw new Error('Text-mask:convertMaskToPlaceholder; The mask property must be an array.');
-  }
-
-  if (mask.indexOf(placeholderChar$1) !== -1) {
-    throw new Error('Placeholder character must not be used as part of the mask. Please specify a character ' + 'that is not present in your mask as your placeholder character.\n\n' + "The placeholder character that was received is: ".concat(JSON.stringify(placeholderChar$1), "\n\n") + "The mask that was received is: ".concat(JSON.stringify(mask)));
-  }
-
-  return mask.map(function (char) {
-    return char instanceof RegExp ? placeholderChar$1 : char;
-  }).join('');
-}
-function isArray(value) {
-  return Array.isArray && Array.isArray(value) || value instanceof Array;
-}
-var strCaretTrap = '[]';
-function processCaretTraps(mask) {
-  var indexes = [];
-  var indexOfCaretTrap;
-
-  while (indexOfCaretTrap = mask.indexOf(strCaretTrap), indexOfCaretTrap !== -1) {
-    indexes.push(indexOfCaretTrap);
-    mask.splice(indexOfCaretTrap, 1);
-  }
-
-  return {
-    maskWithoutCaretTraps: mask,
-    indexes: indexes
-  };
-}
-
-var emptyArray$1 = [];
-var emptyString = '';
-function conformToMask() {
-  var rawValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyString;
-  var mask = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : emptyArray$1;
-  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  if (!isArray(mask)) {
-    if (_typeof(mask) === strFunction) {
-      mask = mask(rawValue, config);
-      mask = processCaretTraps(mask).maskWithoutCaretTraps;
-    } else {
-      throw new Error('Text-mask:conformToMask; The mask property must be an array.');
-    }
-  }
-
-  var _config$guide = config.guide,
-      guide = _config$guide === void 0 ? true : _config$guide,
-      _config$previousConfo = config.previousConformedValue,
-      previousConformedValue = _config$previousConfo === void 0 ? emptyString : _config$previousConfo,
-      _config$placeholderCh = config.placeholderChar,
-      placeholderChar$1 = _config$placeholderCh === void 0 ? placeholderChar : _config$placeholderCh,
-      _config$placeholder = config.placeholder,
-      placeholder = _config$placeholder === void 0 ? convertMaskToPlaceholder(mask, placeholderChar$1) : _config$placeholder,
-      currentCaretPosition = config.currentCaretPosition,
-      keepCharPositions = config.keepCharPositions;
-  var suppressGuide = guide === false && previousConformedValue !== undefined;
-  var rawValueLength = rawValue.length;
-  var previousConformedValueLength = previousConformedValue.length;
-  var placeholderLength = placeholder.length;
-  var maskLength = mask.length;
-  var editDistance = rawValueLength - previousConformedValueLength;
-  var isAddition = editDistance > 0;
-  var indexOfFirstChange = currentCaretPosition + (isAddition ? -editDistance : 0);
-  var indexOfLastChange = indexOfFirstChange + Math.abs(editDistance);
-
-  if (keepCharPositions === true && !isAddition) {
-    var compensatingPlaceholderChars = emptyString;
-
-    for (var i = indexOfFirstChange; i < indexOfLastChange; i++) {
-      if (placeholder[i] === placeholderChar$1) {
-        compensatingPlaceholderChars += placeholderChar$1;
-      }
-    }
-
-    rawValue = rawValue.slice(0, indexOfFirstChange) + compensatingPlaceholderChars + rawValue.slice(indexOfFirstChange, rawValueLength);
-  }
-
-  var rawValueArr = rawValue.split(emptyString).map(function (char, i) {
-    return {
-      char: char,
-      isNew: i >= indexOfFirstChange && i < indexOfLastChange
-    };
-  });
-
-  for (var _i = rawValueLength - 1; _i >= 0; _i--) {
-    var char = rawValueArr[_i].char;
-
-    if (char !== placeholderChar$1) {
-      var shouldOffset = _i >= indexOfFirstChange && previousConformedValueLength === maskLength;
-
-      if (char === placeholder[shouldOffset ? _i - editDistance : _i]) {
-        rawValueArr.splice(_i, 1);
-      }
-    }
-  }
-
-  var conformedValue = emptyString;
-  var someCharsRejected = false;
-
-  placeholderLoop: for (var _i2 = 0; _i2 < placeholderLength; _i2++) {
-    var charInPlaceholder = placeholder[_i2];
-
-    if (charInPlaceholder === placeholderChar$1) {
-      if (rawValueArr.length > 0) {
-        while (rawValueArr.length > 0) {
-          var _rawValueArr$shift = rawValueArr.shift(),
-              rawValueChar = _rawValueArr$shift.char,
-              isNew = _rawValueArr$shift.isNew;
-
-          if (rawValueChar === placeholderChar$1 && suppressGuide !== true) {
-            conformedValue += placeholderChar$1;
-            continue placeholderLoop;
-          } else if (mask[_i2].test(rawValueChar)) {
-            if (keepCharPositions !== true || isNew === false || previousConformedValue === emptyString || guide === false || !isAddition) {
-              conformedValue += rawValueChar;
-            } else {
-              var rawValueArrLength = rawValueArr.length;
-              var indexOfNextAvailablePlaceholderChar = null;
-
-              for (var _i3 = 0; _i3 < rawValueArrLength; _i3++) {
-                var charData = rawValueArr[_i3];
-
-                if (charData.char !== placeholderChar$1 && charData.isNew === false) {
-                  break;
-                }
-
-                if (charData.char === placeholderChar$1) {
-                  indexOfNextAvailablePlaceholderChar = _i3;
-                  break;
-                }
-              }
-
-              if (indexOfNextAvailablePlaceholderChar !== null) {
-                conformedValue += rawValueChar;
-                rawValueArr.splice(indexOfNextAvailablePlaceholderChar, 1);
-              } else {
-                _i2--;
-              }
-            }
-
-            continue placeholderLoop;
-          } else {
-            someCharsRejected = true;
-          }
-        }
-      }
-
-      if (suppressGuide === false) {
-        conformedValue += placeholder.substr(_i2, placeholderLength);
-      }
-
-      break;
-    } else {
-      conformedValue += charInPlaceholder;
-    }
-  }
-
-  if (suppressGuide && isAddition === false) {
-    var indexOfLastFilledPlaceholderChar = null;
-
-    for (var _i4 = 0; _i4 < conformedValue.length; _i4++) {
-      if (placeholder[_i4] === placeholderChar$1) {
-        indexOfLastFilledPlaceholderChar = _i4;
-      }
-    }
-
-    if (indexOfLastFilledPlaceholderChar !== null) {
-      conformedValue = conformedValue.substr(0, indexOfLastFilledPlaceholderChar + 1);
-    } else {
-      conformedValue = emptyString;
-    }
-  }
-
-  return {
-    conformedValue: conformedValue,
-    meta: {
-      someCharsRejected: someCharsRejected
-    }
-  };
-}
-
-var NEXT_CHAR_OPTIONAL = {
-  __nextCharOptional__: true
-};
-var defaultMaskReplacers = {
-  '#': /\d/,
-  A: /[a-z]/i,
-  N: /[a-z0-9]/i,
-  '?': NEXT_CHAR_OPTIONAL,
-  X: /./
-};
-
-var stringToRegexp = function stringToRegexp(str) {
-  var lastSlash = str.lastIndexOf('/');
-  return new RegExp(str.slice(1, lastSlash), str.slice(lastSlash + 1));
-};
-
-var makeRegexpOptional = function makeRegexpOptional(charRegexp) {
-  return stringToRegexp(charRegexp.toString().replace(/.(\/)[gmiyus]{0,6}$/, function (match) {
-    return match.replace('/', '?/');
-  }));
-};
-
-var escapeIfNeeded = function escapeIfNeeded(char) {
-  return '[\\^$.|?*+()'.indexOf(char) > -1 ? "\\".concat(char) : char;
-};
-
-var charRegexp = function charRegexp(char) {
-  return new RegExp("/[".concat(escapeIfNeeded(char), "]/"));
-};
-
-var isRegexp = function isRegexp(entity) {
-  return entity instanceof RegExp;
-};
-
-var castToRegexp = function castToRegexp(char) {
-  return isRegexp(char) ? char : charRegexp(char);
-};
-
-function maskToRegExpMask(mask) {
-  var maskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
-  return mask.map(function (char, index, array) {
-    var maskChar = maskReplacers[char] || char;
-    var previousChar = array[index - 1];
-    var previousMaskChar = maskReplacers[previousChar] || previousChar;
-
-    if (maskChar === NEXT_CHAR_OPTIONAL) {
-      return null;
-    }
-
-    if (previousMaskChar === NEXT_CHAR_OPTIONAL) {
-      return makeRegexpOptional(castToRegexp(maskChar));
-    }
-
-    return maskChar;
-  }).filter(Boolean);
-}
-
-function stringMaskToRegExpMask(stringMask) {
-  var maskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
-  return maskToRegExpMask(stringMask.split(''), maskReplacers);
-}
-function arrayMaskToRegExpMask(arrayMask) {
-  var maskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
-  var flattenedMask = arrayMask.map(function (part) {
-    if (part instanceof RegExp) {
-      return part;
-    }
-
-    if (typeof part === 'string') {
-      return part.split('');
-    }
-
-    return null;
-  }).filter(Boolean).reduce(function (mask, part) {
-    return mask.concat(part);
-  }, []);
-  return maskToRegExpMask(flattenedMask, maskReplacers);
-}
-
-var trigger = function trigger(el, type) {
-  var e = document.createEvent('HTMLEvents');
-  e.initEvent(type, true, true);
-  el.dispatchEvent(e);
-};
-var queryInputElementInside = function queryInputElementInside(el) {
-  return el instanceof HTMLInputElement ? el : el.querySelector('input') || el;
-};
-
-var inBrowser = typeof window !== 'undefined';
-var UA = inBrowser && window.navigator.userAgent.toLowerCase();
-var isEdge = UA && UA.indexOf('edge/') > 0;
-var isAndroid = UA && UA.indexOf('android') > 0;
-var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
-
-function createOptions() {
-  var elementOptions = new Map();
-  var defaultOptions = {
-    previousValue: '',
-    mask: []
-  };
-
-  function get(el) {
-    return elementOptions.get(el) || _objectSpread2({}, defaultOptions);
-  }
-
-  function partiallyUpdate(el, newOptions) {
-    elementOptions.set(el, _objectSpread2(_objectSpread2({}, get(el)), newOptions));
-  }
-
-  function remove(el) {
-    elementOptions.delete(el);
-  }
-
-  return {
-    partiallyUpdate: partiallyUpdate,
-    remove: remove,
-    get: get
-  };
-}
-
-var options = createOptions();
-
-function triggerInputUpdate(el) {
-  var fn = trigger.bind(null, el, 'input');
-
-  if (isAndroid && isChrome) {
-    setTimeout(fn, 0);
-  } else {
-    fn();
-  }
-}
-
-function updateValue(el) {
-  var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var value = el.value;
-
-  var _options$get = options.get(el),
-      previousValue = _options$get.previousValue,
-      mask = _options$get.mask;
-
-  var isValueChanged = value !== previousValue;
-  var isLengthIncreased = value.length > previousValue.length;
-  var isUpdateNeeded = value && isValueChanged && isLengthIncreased;
-
-  if (force || isUpdateNeeded) {
-    var _conformToMask = conformToMask(value, mask, {
-      guide: false
-    }),
-        conformedValue = _conformToMask.conformedValue;
-
-    el.value = conformedValue;
-    triggerInputUpdate(el);
-  }
-
-  options.partiallyUpdate(el, {
-    previousValue: value
-  });
-}
-
-function updateMask(el, inputMask, maskReplacers) {
-  var mask = null;
-
-  if (Array.isArray(inputMask)) {
-    mask = arrayMaskToRegExpMask(inputMask, maskReplacers);
-  } else if (typeof inputMask === 'function') {
-    mask = inputMask;
-  } else {
-    mask = stringMaskToRegExpMask(inputMask, maskReplacers);
-  }
-
-  options.partiallyUpdate(el, {
-    mask: mask
-  });
-}
-
-function extendMaskReplacers(maskReplacers) {
-  var baseMaskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
-
-  if (maskReplacers === null || Array.isArray(maskReplacers) || _typeof(maskReplacers) !== 'object') {
-    return baseMaskReplacers;
-  }
-
-  return Object.keys(maskReplacers).reduce(function (extendedMaskReplacers, key) {
-    var value = maskReplacers[key];
-
-    if (value !== null && !(value instanceof RegExp)) {
-      return extendedMaskReplacers;
-    }
-
-    return _objectSpread2(_objectSpread2({}, extendedMaskReplacers), {}, _defineProperty({}, key, value));
-  }, baseMaskReplacers);
-}
-
-function maskToString(mask) {
-  var maskArray = Array.isArray(mask) ? mask : [mask];
-  var filteredMaskArray = maskArray.filter(function (part) {
-    return typeof part === 'string' || part instanceof RegExp;
-  });
-  return filteredMaskArray.toString();
-}
-
-function createDirective() {
-  var directiveOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var instanceMaskReplacers = extendMaskReplacers(directiveOptions && directiveOptions.placeholders);
-  return {
-    bind: function bind(el, _ref) {
-      var value = _ref.value;
-      el = queryInputElementInside(el);
-      updateMask(el, value, instanceMaskReplacers);
-      updateValue(el);
-    },
-    componentUpdated: function componentUpdated(el, _ref2) {
-      var value = _ref2.value,
-          oldValue = _ref2.oldValue;
-      el = queryInputElementInside(el);
-      var isMaskChanged = typeof value === 'function' || maskToString(oldValue) !== maskToString(value);
-
-      if (isMaskChanged) {
-        updateMask(el, value, instanceMaskReplacers);
-      }
-
-      updateValue(el, isMaskChanged);
-    },
-    unbind: function unbind(el) {
-      el = queryInputElementInside(el);
-      options.remove(el);
-    }
-  };
-}
-var directive = createDirective();
-
-var filter = (function (value, stringMask) {
-  var mask = stringMaskToRegExpMask(stringMask);
-
-  var _conformToMask = conformToMask(value, mask, {
-    guide: false
-  }),
-      conformedValue = _conformToMask.conformedValue;
-
-  return conformedValue;
-});
-
-var plugin = (function (Vue) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  Vue.directive('mask', createDirective(options));
-  Vue.filter('VMask', filter);
-});
-
-/* harmony default export */ __webpack_exports__["default"] = (plugin);
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vee-validate/dist/rules.js":
 /*!*************************************************!*\
   !*** ./node_modules/vee-validate/dist/rules.js ***!
@@ -60276,7 +59928,7 @@ var render = function() {
                                               ],
                                               staticClass: "form-control",
                                               attrs: {
-                                                type: "text",
+                                                type: "tel",
                                                 id: "birth_date",
                                                 placeholder:
                                                   "Digite a data de nascimento do cliente"
@@ -60358,10 +60010,12 @@ var render = function() {
                                                 {
                                                   name: "mask",
                                                   rawName: "v-mask",
-                                                  value:
-                                                    "+55 (##) ?#?####-####",
+                                                  value: [
+                                                    "+55 (##) ####-####",
+                                                    "+55 (##) #####-####"
+                                                  ],
                                                   expression:
-                                                    "'+55 (##) ?#?####-####'"
+                                                    "['+55 (##) ####-####', '+55 (##) #####-####']"
                                                 },
                                                 {
                                                   name: "model",
@@ -60372,7 +60026,7 @@ var render = function() {
                                               ],
                                               staticClass: "form-control",
                                               attrs: {
-                                                type: "text",
+                                                type: "tel",
                                                 id: "phone",
                                                 placeholder:
                                                   "Digite o telefone do cliente"
@@ -60499,6 +60153,517 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=template&id=5d0b790d&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=template&id=5d0b790d& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content-wrapper" }, [
+    _c("section", { staticClass: "content-header" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("ol", { staticClass: "breadcrumb" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: { name: "client-list" } } }, [
+              _vm._v("Clientes")
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("li", { staticClass: "active" }, [_vm._v("Edição")])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("section", { staticClass: "content" }, [
+      _c(
+        "div",
+        { staticClass: "box" },
+        [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("ValidationObserver", {
+            ref: "form",
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var handleSubmit = ref.handleSubmit
+                  var invalid = ref.invalid
+                  return [
+                    _c(
+                      "form",
+                      {
+                        attrs: { autocomplete: "off" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return handleSubmit(_vm.updateClient)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "box-body" },
+                          [
+                            _c("ValidationProvider", {
+                              attrs: {
+                                vid: "name",
+                                name: "name",
+                                rules: "required|min:3"
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "default",
+                                    fn: function(ref) {
+                                      var errors = ref.errors
+                                      return [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-group",
+                                            class: { "has-error": errors[0] }
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass: "control-label",
+                                                attrs: { for: "name" }
+                                              },
+                                              [_vm._v("Nome Completo")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.name,
+                                                  expression: "form.name"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                type: "text",
+                                                id: "name",
+                                                placeholder:
+                                                  "Digite o nome completo do cliente"
+                                              },
+                                              domProps: {
+                                                value: _vm.form.name
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "name",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            errors
+                                              ? _c(
+                                                  "span",
+                                                  { staticClass: "help-block" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                  " +
+                                                        _vm._s(errors[0]) +
+                                                        "\n                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("ValidationProvider", {
+                              attrs: {
+                                vid: "email",
+                                name: "email",
+                                rules: "required|email"
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "default",
+                                    fn: function(ref) {
+                                      var errors = ref.errors
+                                      return [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-group",
+                                            class: { "has-error": errors[0] }
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass: "control-label",
+                                                attrs: { for: "email" }
+                                              },
+                                              [_vm._v("E-mail")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.email,
+                                                  expression: "form.email"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                type: "email",
+                                                id: "email",
+                                                placeholder:
+                                                  "Digite o e-mail do cliente"
+                                              },
+                                              domProps: {
+                                                value: _vm.form.email
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "email",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            errors
+                                              ? _c(
+                                                  "span",
+                                                  { staticClass: "help-block" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                  " +
+                                                        _vm._s(errors[0]) +
+                                                        "\n                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("ValidationProvider", {
+                              attrs: {
+                                vid: "birth_date",
+                                name: "birth_date",
+                                rules: "date_format:dd/MM/yyyy"
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "default",
+                                    fn: function(ref) {
+                                      var errors = ref.errors
+                                      return [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-group",
+                                            class: { "has-error": errors[0] }
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass: "control-label",
+                                                attrs: { for: "birth_date" }
+                                              },
+                                              [_vm._v("Data de Nascimento")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "mask",
+                                                  rawName: "v-mask",
+                                                  value: "##/##/####",
+                                                  expression: "'##/##/####'"
+                                                },
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.birth_date,
+                                                  expression: "form.birth_date"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                type: "tel",
+                                                id: "birth_date",
+                                                placeholder:
+                                                  "Digite a data de nascimento do cliente"
+                                              },
+                                              domProps: {
+                                                value: _vm.form.birth_date
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "birth_date",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            errors
+                                              ? _c(
+                                                  "span",
+                                                  { staticClass: "help-block" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                  " +
+                                                        _vm._s(errors[0]) +
+                                                        "\n                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("ValidationProvider", {
+                              attrs: {
+                                vid: "phone",
+                                name: "phone",
+                                rules: {
+                                  regex: /\+\d{2}\s\(\d{2}\)\s\d{4,5}\-\d{4}/
+                                }
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "default",
+                                    fn: function(ref) {
+                                      var errors = ref.errors
+                                      return [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-group",
+                                            class: { "has-error": errors[0] }
+                                          },
+                                          [
+                                            _c(
+                                              "label",
+                                              {
+                                                staticClass: "control-label",
+                                                attrs: { for: "phone" }
+                                              },
+                                              [_vm._v("Telefone")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "mask",
+                                                  rawName: "v-mask",
+                                                  value: [
+                                                    "+55 (##) ####-####",
+                                                    "+55 (##) #####-####"
+                                                  ],
+                                                  expression:
+                                                    "['+55 (##) ####-####', '+55 (##) #####-####']"
+                                                },
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.form.phone,
+                                                  expression: "form.phone"
+                                                }
+                                              ],
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                type: "tel",
+                                                id: "phone",
+                                                placeholder:
+                                                  "Digite o telefone do cliente"
+                                              },
+                                              domProps: {
+                                                value: _vm.form.phone
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.form,
+                                                    "phone",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            errors
+                                              ? _c(
+                                                  "span",
+                                                  { staticClass: "help-block" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                  " +
+                                                        _vm._s(errors[0]) +
+                                                        "\n                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "box-footer" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-flat btn-danger",
+                              attrs: { type: "button", title: "Cancelar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$router.back()
+                                }
+                              }
+                            },
+                            [_vm._v("Cancelar")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-flat btn-success pull-right",
+                              attrs: {
+                                type: "submit",
+                                disabled: invalid || _vm.loading,
+                                title: "Cadastrar"
+                              }
+                            },
+                            [_vm._v("Salvar Alterações")]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", [
+      _vm._v("\n      Clientes\n      "),
+      _c("small", [_vm._v("Edição")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fa fa-dashboard" }),
+        _vm._v(" Dashboard\n        ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Dados do Cliente")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin-section/clients/ClientList.vue?vue&type=template&id=4dc351a1&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin-section/clients/ClientList.vue?vue&type=template&id=4dc351a1& ***!
@@ -60582,9 +60747,21 @@ var render = function() {
                         [_c("i", { staticClass: "fa fa-eye" })]
                       ),
                       _vm._v(" "),
-                      _vm._m(2, true),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning btn-flat",
+                          attrs: { type: "button", title: "Editar Cliente" },
+                          on: {
+                            click: function($event) {
+                              return _vm.goToEditClient(client.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-edit" })]
+                      ),
                       _vm._v(" "),
-                      _vm._m(3, true)
+                      _vm._m(2, true)
                     ])
                   ])
                 ])
@@ -60649,19 +60826,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Ações")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-warning btn-flat",
-        attrs: { type: "button", title: "Editar Cliente" }
-      },
-      [_c("i", { staticClass: "fa fa-edit" })]
-    )
   },
   function() {
     var _vm = this
@@ -60884,7 +61048,12 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-flat btn-warning pull-right",
-              attrs: { type: "submit", title: "Editar" }
+              attrs: { type: "submit", title: "Editar" },
+              on: {
+                click: function($event) {
+                  return _vm.goToEditClient(_vm.client.id)
+                }
+              }
             },
             [_vm._v("Editar")]
           )
@@ -64067,6 +64236,17 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ __webpack_exports__["default"] = (VueRouter);
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-the-mask/dist/vue-the-mask.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vue-the-mask/dist/vue-the-mask.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function(e,t){ true?module.exports=t():undefined})(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var a=n[r]={i:r,l:!1,exports:{}};return e[r].call(a.exports,a,a.exports,t),a.l=!0,a.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p=".",t(t.s=10)}([function(e,t){e.exports={"#":{pattern:/\d/},X:{pattern:/[0-9a-zA-Z]/},S:{pattern:/[a-zA-Z]/},A:{pattern:/[a-zA-Z]/,transform:function(e){return e.toLocaleUpperCase()}},a:{pattern:/[a-zA-Z]/,transform:function(e){return e.toLocaleLowerCase()}},"!":{escape:!0}}},function(e,t,n){"use strict";function r(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!0),t}var a=n(2),o=n(0),i=n.n(o);t.a=function(e,t){var o=t.value;if((Array.isArray(o)||"string"==typeof o)&&(o={mask:o,tokens:i.a}),"INPUT"!==e.tagName.toLocaleUpperCase()){var u=e.getElementsByTagName("input");if(1!==u.length)throw new Error("v-mask directive requires 1 input, found "+u.length);e=u[0]}e.oninput=function(t){if(t.isTrusted){var i=e.selectionEnd,u=e.value[i-1];for(e.value=n.i(a.a)(e.value,o.mask,!0,o.tokens);i<e.value.length&&e.value.charAt(i-1)!==u;)i++;e===document.activeElement&&(e.setSelectionRange(i,i),setTimeout(function(){e.setSelectionRange(i,i)},0)),e.dispatchEvent(r("input"))}};var s=n.i(a.a)(e.value,o.mask,!0,o.tokens);s!==e.value&&(e.value=s,e.dispatchEvent(r("input")))}},function(e,t,n){"use strict";var r=n(6),a=n(5);t.a=function(e,t){var o=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],i=arguments[3];return Array.isArray(t)?n.i(a.a)(r.a,t,i)(e,t,o,i):n.i(r.a)(e,t,o,i)}},function(e,t,n){"use strict";function r(e){e.component(s.a.name,s.a),e.directive("mask",i.a)}Object.defineProperty(t,"__esModule",{value:!0});var a=n(0),o=n.n(a),i=n(1),u=n(7),s=n.n(u);n.d(t,"TheMask",function(){return s.a}),n.d(t,"mask",function(){return i.a}),n.d(t,"tokens",function(){return o.a}),n.d(t,"version",function(){return c});var c="0.11.1";t.default=r,"undefined"!=typeof window&&window.Vue&&window.Vue.use(r)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),a=n(0),o=n.n(a),i=n(2);t.default={name:"TheMask",props:{value:[String,Number],mask:{type:[String,Array],required:!0},masked:{type:Boolean,default:!1},tokens:{type:Object,default:function(){return o.a}}},directives:{mask:r.a},data:function(){return{lastValue:null,display:this.value}},watch:{value:function(e){e!==this.lastValue&&(this.display=e)},masked:function(){this.refresh(this.display)}},computed:{config:function(){return{mask:this.mask,tokens:this.tokens,masked:this.masked}}},methods:{onInput:function(e){e.isTrusted||this.refresh(e.target.value)},refresh:function(e){this.display=e;var e=n.i(i.a)(e,this.mask,this.masked,this.tokens);e!==this.lastValue&&(this.lastValue=e,this.$emit("input",e))}}}},function(e,t,n){"use strict";function r(e,t,n){return t=t.sort(function(e,t){return e.length-t.length}),function(r,a){for(var o=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],i=0;i<t.length;){var u=t[i];i++;var s=t[i];if(!(s&&e(r,s,!0,n).length>u.length))return e(r,u,o,n)}return""}}t.a=r},function(e,t,n){"use strict";function r(e,t){var n=!(arguments.length>2&&void 0!==arguments[2])||arguments[2],r=arguments[3];e=e||"",t=t||"";for(var a=0,o=0,i="";a<t.length&&o<e.length;){var u=t[a],s=r[u],c=e[o];s&&!s.escape?(s.pattern.test(c)&&(i+=s.transform?s.transform(c):c,a++),o++):(s&&s.escape&&(a++,u=t[a]),n&&(i+=u),c===u&&o++,a++)}for(var f="";a<t.length&&n;){var u=t[a];if(r[u]){f="";break}f+=u,a++}return i+f}t.a=r},function(e,t,n){var r=n(8)(n(4),n(9),null,null);e.exports=r.exports},function(e,t){e.exports=function(e,t,n,r){var a,o=e=e||{},i=typeof e.default;"object"!==i&&"function"!==i||(a=e,o=e.default);var u="function"==typeof o?o.options:o;if(t&&(u.render=t.render,u.staticRenderFns=t.staticRenderFns),n&&(u._scopeId=n),r){var s=u.computed||(u.computed={});Object.keys(r).forEach(function(e){var t=r[e];s[e]=function(){return t}})}return{esModule:a,exports:o,options:u}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("input",{directives:[{name:"mask",rawName:"v-mask",value:e.config,expression:"config"}],attrs:{type:"text"},domProps:{value:e.display},on:{input:e.onInput}})},staticRenderFns:[]}},function(e,t,n){e.exports=n(3)}])});
 
 /***/ }),
 
@@ -77248,7 +77428,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
+/* harmony import */ var vue_the_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-the-mask */ "./node_modules/vue-the-mask/dist/vue-the-mask.js");
+/* harmony import */ var vue_the_mask__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_the_mask__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_App_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
@@ -77260,6 +77441,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
+ //import VueMask from "v-mask";
 
 
 
@@ -77328,9 +77510,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("ValidationObserver", vee_v
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter("birthDateAndAge", function (date) {
   return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format("DD/MM/YYYY") + " (" + moment__WEBPACK_IMPORTED_MODULE_2___default()().diff(date, "years") + " anos)";
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter("birthDate", function (date) {
+  return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format("DD/MM/YYYY");
 }); // VueMask
+//Vue.use(VueMask);
+// VueTheMask
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(v_mask__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_the_mask__WEBPACK_IMPORTED_MODULE_3___default.a);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   router: _router__WEBPACK_IMPORTED_MODULE_5__["router"],
@@ -77806,6 +77993,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/admin-section/clients/ClientEdit.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pages/admin-section/clients/ClientEdit.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ClientEdit_vue_vue_type_template_id_5d0b790d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClientEdit.vue?vue&type=template&id=5d0b790d& */ "./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=template&id=5d0b790d&");
+/* harmony import */ var _ClientEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClientEdit.vue?vue&type=script&lang=js& */ "./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ClientEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ClientEdit_vue_vue_type_template_id_5d0b790d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ClientEdit_vue_vue_type_template_id_5d0b790d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/admin-section/clients/ClientEdit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClientEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ClientEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClientEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=template&id=5d0b790d&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=template&id=5d0b790d& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClientEdit_vue_vue_type_template_id_5d0b790d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ClientEdit.vue?vue&type=template&id=5d0b790d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin-section/clients/ClientEdit.vue?vue&type=template&id=5d0b790d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClientEdit_vue_vue_type_template_id_5d0b790d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClientEdit_vue_vue_type_template_id_5d0b790d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/admin-section/clients/ClientList.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/pages/admin-section/clients/ClientList.vue ***!
@@ -77964,6 +78220,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_admin_section_clients_ClientList_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/admin-section/clients/ClientList.vue */ "./resources/js/pages/admin-section/clients/ClientList.vue");
 /* harmony import */ var _pages_admin_section_clients_ClientCreate_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/admin-section/clients/ClientCreate.vue */ "./resources/js/pages/admin-section/clients/ClientCreate.vue");
 /* harmony import */ var _pages_admin_section_clients_ClientShow_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/admin-section/clients/ClientShow.vue */ "./resources/js/pages/admin-section/clients/ClientShow.vue");
+/* harmony import */ var _pages_admin_section_clients_ClientEdit_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/admin-section/clients/ClientEdit.vue */ "./resources/js/pages/admin-section/clients/ClientEdit.vue");
 
  // Components
 
@@ -77972,6 +78229,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  // Admin pages
+
 
 
 
@@ -78035,6 +78293,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         path: ':id',
         name: 'client-show',
         component: _pages_admin_section_clients_ClientShow_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+      }, {
+        path: ':id/editar',
+        name: 'client-edit',
+        component: _pages_admin_section_clients_ClientEdit_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
       }]
     }]
   }]
@@ -78191,11 +78453,39 @@ function getById(id) {
     });
   });
 }
+/**
+ * Sends a PUT request for updating a client.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {int} id
+ * @param  {string} name
+ * @param  {string} email
+ * @param  {string} birth_date 
+ * @param  {string} phone 
+ * @return {Promise}
+ */
+
+
+function update(id, name, email, birth_date, phone) {
+  return new Promise(function (resolve, reject) {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.put("clients/".concat(id), {
+      name: name,
+      email: email,
+      birth_date: birth_date,
+      phone: phone
+    }).then(function (resp) {
+      resolve(resp);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   list: list,
   store: store,
-  getById: getById
+  getById: getById,
+  update: update
 });
 
 /***/ }),
