@@ -104,11 +104,24 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @author Níkolas Timóteo <nikolastps@hotmail.com>
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $client = Client::find($id);
+
+        if ($client) {
+            $client->delete();
+
+            return response()->json([
+                'message' => 'Cliente excluído.'
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Cliente não encontrado.'
+        ], 404);
     }
 }

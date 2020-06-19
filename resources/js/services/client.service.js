@@ -93,9 +93,29 @@ function update(id, name, email, birth_date, phone) {
   });
 }
 
+/**
+ * Sends a DELETE request for deleting a client.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {int} id 
+ * @return {Promise}
+ */
+function destroy(id) {
+  return new Promise((resolve, reject) => {
+    Vue.axios.delete(`clients/${id}`)
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
 export default {
   list,
   store,
   getById,
-  update
+  update,
+  destroy
 }
