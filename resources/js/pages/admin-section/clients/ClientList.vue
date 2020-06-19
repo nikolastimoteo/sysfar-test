@@ -151,7 +151,7 @@ export default {
       this.loadClients();
     }
   },
-  created() {
+  mounted() {
     this.loadClients();
   }
 };
