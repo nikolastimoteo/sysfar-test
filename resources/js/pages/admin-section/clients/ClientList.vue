@@ -20,14 +20,43 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <div class="box-tools">
+            <button type="button" class="btn btn-block btn-success btn-flat" @click="goToCreateClient()" title="Cadastrar Usuário"><i class="fa fa-plus"></i> Cadastrar</button>
+          </div>
         </div>
-        <div class="box-body">
-          Start creating your amazing application!
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Data de Nascimento (Idade)</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="client in paginatedClients.data" :key="client.id">
+                <td>{{ client.name }}</td>
+                <td>{{ client.email }}</td>
+                <td v-if="client.birth_date">{{ client.birth_date | birthDateAndAge }}</td>
+                <td v-else>(Não informado)</td>
+                <td>{{ client.phone ? client.phone : "(Não informado)" }}</td>
+                <td>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-flat" title="Visualizar Cliente"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn btn-warning btn-flat" title="Editar Cliente"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger btn-flat" title="Excluir Cliente"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
+          <pagination :data="paginatedClients" @pagination-change-page="loadClients"></pagination>
         </div>
         <!-- /.box-footer-->
       </div>
@@ -37,3 +66,29 @@
   </div>
   <!-- /.content-wrapper -->
 </template>
+
+<script>
+import clientService from "../../../services/client.service";
+
+export default {
+  data() {
+    return {
+      paginatedClients: {},
+    }
+  },
+  methods: {
+    loadClients(page = 1) {
+      clientService.list(page)
+        .then(resp => {
+          this.paginatedClients = resp.data.paginated_clients;
+        });
+    },
+    goToCreateClient() {
+      this.$router.push({ name: 'client-create' });
+    }
+  },
+  created() {
+    this.loadClients();
+  }
+};
+</script>

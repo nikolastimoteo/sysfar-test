@@ -18,7 +18,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(20);
+        $clients = Client::orderBy('name', 'ASC')->paginate(20);
 
         return response()->json([
             'paginated_clients' => $clients

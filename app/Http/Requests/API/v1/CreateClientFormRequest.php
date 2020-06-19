@@ -38,7 +38,7 @@ class CreateClientFormRequest extends FormRequest
         return [
             'name'       => 'required|string|min:3',
             'email'      => 'required|email|unique:clients',
-            'birth_date' => 'sometimes|nullable|date_format:"d-m-Y"',
+            'birth_date' => 'sometimes|nullable|date_format:"d-m-Y"|before:tomorrow',
             'phone'      => 'sometimes|nullable|regex:/\+\d{2}\s\(\d{2}\)\s\d{4,5}\-\d{4}/',
         ];
     }
@@ -57,6 +57,7 @@ class CreateClientFormRequest extends FormRequest
             'min'         => 'Mínimo :min caracteres.',
             'date_format' => 'Data inválida. Formato aceito: dd/mm/aaaa',
             'regex'       => 'Telefone inválido. Formatos aceitos: +99 (99) 99999-9999 ou +99 (99) 9999-9999',
+            'before'      => 'Data de nascimento inválida.'
         ];
     }
 }

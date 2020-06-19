@@ -1,13 +1,14 @@
 require("./bootstrap");
 import Vue from "vue";
 import VueAxios from "vue-axios";
-import moment from 'moment';
-import VueMask from 'v-mask';
+import moment from "moment";
+import VueMask from "v-mask";
 import App from "./components/App.vue";
 import { router } from "./router";
 import { store } from "./store";
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
-import { required, email, regex, min, date_format } from "vee-validate/dist/rules";
+import { required, email, regex, min } from "vee-validate/dist/rules";
+import LaraveVuePagination from "laravel-vue-pagination";
 
 // Axios Config
 const axiosInstance = axios.create({
@@ -60,8 +61,16 @@ extend("min", min);
 extend("date_format", value => {
   return moment(value, 'DD/MM/YYYY', true).isValid();
 });
+
+// Global Components
+Vue.component("Pagination", LaraveVuePagination);
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
+
+// Filters
+Vue.filter("birthDateAndAge", function (date) {
+  return moment(date).format("DD/MM/YYYY") +" ("+ moment().diff(date, "years") +" anos)"
+});
 
 // VueMask
 Vue.use(VueMask);
