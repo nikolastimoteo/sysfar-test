@@ -7,12 +7,6 @@
     <div class="login-box-body">
       <p class="login-box-msg">Entre para começar</p>
 
-      <div class="callout callout-danger" v-if="errorMessage !== ''">
-        <h4>Erro!</h4>
-
-        <p>{{ errorMessage }}</p>
-      </div>
-
       <ValidationObserver ref="form" v-slot="{ handleSubmit, invalid }">
         <form autocomplete="off" @submit.prevent="handleSubmit(login)">
           <ValidationProvider v-slot="{ errors }" vid="email" name="email" rules="required|email">
@@ -65,14 +59,12 @@ export default {
       appName: process.env.MIX_APP_NAME,
       email: "",
       password: "",
-      errorMessage: "",
       loading: false
     }
   },
   methods: {
     login() {
       this.loading = true;
-      this.errorMessage = "";
 
       const { email, password } = this;
 
@@ -87,11 +79,17 @@ export default {
             if (err.response.data.errors) {
               this.$refs.form.setErrors(err.response.data.errors);
             } else if (err.response.data.message) {
-              this.errorMessage = err.response.data.message;
+              this.$notify({
+                group: "auth",
+                type: "error",
+                title: "Erro!",
+                text: err.response.data.message,
+                duration: 5000,
+                speed: 1000
+              });
             }
           }
           this.loading = false;
-          console.error(err);
         });
     }
   }

@@ -10,6 +10,8 @@ import { ValidationObserver, ValidationProvider, extend, localize } from "vee-va
 import { required, email, regex, min } from "vee-validate/dist/rules";
 import LaraveVuePagination from "laravel-vue-pagination";
 import VuePageTransition from "vue-page-transition";
+import Notifications from "vue-notification";
+import velocity from "velocity-animate";
 
 // Axios Config
 const axiosInstance = axios.create({
@@ -33,7 +35,17 @@ Vue.axios.interceptors.response.use(function (response) {
   const err = error.response;
   if(!err.data.status && err.status === 401 && err.config && !err.config.__isRetryRequest) {
       localStorage.removeItem("user-token");
-      router.push({name: "login"});
+      if (router.currentRoute.name !== "login") {
+        Vue.notify({
+          group: "auth",
+          type: "warn",
+          title: "Sessão Expirada!",
+          text: "Faça login novamente para continuar.",
+          duration: 5000,
+          speed: 1000
+        });
+        router.push({ name: "login" });
+      }
   }
   return Promise.reject(error);
 });
@@ -81,6 +93,9 @@ Vue.use(VueTheMask);
 
 // VuePageTransition
 Vue.use(VuePageTransition);
+
+// VueNotifications
+Vue.use(Notifications, { velocity });
 
 // Production config
 if (process.env.NODE_ENV === "production") {

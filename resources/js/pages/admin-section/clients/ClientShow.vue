@@ -94,6 +94,16 @@ export default {
 					}
 				})
 				.catch(err => {
+          if (err.response && err.response.data.message) {
+            this.$notify({
+              group: "geral",
+              type: "error",
+              title: "Erro!",
+              text: err.response.data.message,
+              duration: 5000,
+              speed: 1000
+            });
+          }
 					this.$router.back();
 				});
     },
@@ -108,9 +118,38 @@ export default {
     },
     deleteClient() {
       clientService.destroy(this.client.id)
-        .then(() => {
+        .then(resp => {
           this.closeDeleteConfirmationModal();
+          this.$notify({
+            group: "geral",
+            type: "success",
+            title: "Sucesso!",
+            text: resp.data.message,
+            duration: 5000,
+            speed: 1000
+          });
           this.$router.push({ name: 'client-list' });
+        })
+        .catch(err => {
+          if(err.response && err.response.data.message) {
+            this.$notify({
+              group: "geral",
+              type: "error",
+              title: "Erro!",
+              text: err.response.data.message,
+              duration: 5000,
+              speed: 1000
+            });
+          } else {
+            this.$notify({
+              group: "geral",
+              type: "error",
+              title: "Erro!",
+              text: "Erro ao excluir cliente. Tente novamente!",
+              duration: 5000,
+              speed: 1000
+            });
+          }
         });
     }
 	},

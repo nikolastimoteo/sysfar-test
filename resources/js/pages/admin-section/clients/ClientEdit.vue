@@ -90,21 +90,21 @@ import clientService from "../../../services/client.service";
 
 export default {
     data() {
-        return {
-            form: {
-                id: "",
-                name: "",
-                email: "",
-                birth_date: "",
-                phone: ""
-            },
-            loading: false
-        }
+      return {
+        form: {
+          id: "",
+          name: "",
+          email: "",
+          birth_date: "",
+          phone: ""
+        },
+        loading: false
+      }
     },
     methods: {
       loadClient() {
         clientService.getById(this.$route.params.id)
-          .then((resp) => {
+          .then(resp => {
             const client = resp.data.client;
             this.form.id = client.id;
             this.form.name = client.name;
@@ -112,7 +112,17 @@ export default {
             this.form.birth_date = client.birth_date ? this.$options.filters.birthDate(client.birth_date) : "";
             this.form.phone = client.phone;
           })
-          .catch((err) => {
+          .catch(err => {
+            if (err.response && err.response.data.message) {
+              this.$notify({
+                group: "geral",
+                type: "error",
+                title: "Erro!",
+                text: err.response.data.message,
+                duration: 5000,
+                speed: 1000
+              });
+            }
             this.$router.back();
           });
       },
@@ -122,14 +132,31 @@ export default {
         const { id, name, email, birth_date, phone } = this.form;
 
         clientService.update(id, name, email, birth_date, phone)
-          .then(() => {
+          .then(resp => {
             this.loading = false;
+            this.$notify({
+              group: "geral",
+              type: "success",
+              title: "Sucesso!",
+              text: resp.data.message,
+              duration: 5000,
+              speed: 1000
+            });
             this.$router.push({ name: 'client-list' });
           })
           .catch(err => {
             this.loading = false;
             if(err.response && err.response.data.errors) {
               this.$refs.form.setErrors(err.response.data.errors);
+            } else {
+              this.$notify({
+                group: "geral",
+                type: "error",
+                title: "Erro!",
+                text: "Erro ao editar cliente. Tente novamente!",
+                duration: 5000,
+                speed: 1000
+              });
             }
           });
       }

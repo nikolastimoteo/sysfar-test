@@ -107,14 +107,31 @@ export default {
         const { name, email, birth_date, phone } = this.form;
 
         clientService.store(name, email, birth_date, phone)
-          .then(() => {
+          .then(resp => {
             this.loading = false;
+            this.$notify({
+              group: "geral",
+              type: "success",
+              title: "Sucesso!",
+              text: resp.data.message,
+              duration: 5000,
+              speed: 1000
+            });
             this.$router.push({ name: 'client-list' });
           })
           .catch(err => {
             this.loading = false;
             if(err.response && err.response.data.errors) {
               this.$refs.form.setErrors(err.response.data.errors);
+            } else {
+              this.$notify({
+                group: "geral",
+                type: "error",
+                title: "Erro!",
+                text: "Erro ao cadastrar cliente. Tente novamente!",
+                duration: 5000,
+                speed: 1000
+              });
             }
           });
       }

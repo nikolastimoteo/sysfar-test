@@ -111,7 +111,6 @@ export default {
         })
         .catch(err => {
           this.$router.push({ name: "login" });
-          console.error(err);
         });
     }
   },
