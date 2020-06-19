@@ -20,8 +20,23 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <div class="box-tools">
-            <button type="button" class="btn btn-block btn-success btn-flat" @click="goToCreateClient()" title="Cadastrar Cliente"><i class="fa fa-plus"></i> Cadastrar</button>
+          <div class="row">
+            <div class="col-xs-12 col-sm-3 pull-right" style="margin-bottom: 5px;">
+              <div class="box-tools">
+                <button type="button" class="btn btn-block btn-success btn-flat" @click="goToCreateClient()" title="Cadastrar Cliente"><i class="fa fa-plus"></i> Cadastrar</button>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+              <div class="box-tools">
+                <div class="input-group" style="width: 100%;">
+                  <input type="text" name="search_query" class="form-control pull-right" v-model="searchQuery" placeholder="Pesquise clientes pelo nome ou data de nascimento...">
+
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-flat" @click="searchClient()" title="Pesquisar"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- /.box-header -->
@@ -90,15 +105,23 @@ export default {
     return {
       paginatedClients: {},
       selectedClient: {},
-      isDeleteConfirmationModalVisible: false
+      isDeleteConfirmationModalVisible: false,
+      searchQuery: ""
     }
   },
   methods: {
     loadClients(page = 1) {
-      clientService.list(page)
-        .then(resp => {
-          this.paginatedClients = resp.data.paginated_clients;
-        });
+      if (!this.searchQuery) {
+        clientService.list(page)
+          .then(resp => {
+            this.paginatedClients = resp.data.paginated_clients;
+          });
+      } else {
+        clientService.search(this.searchQuery, page)
+          .then((resp) => {
+            this.paginatedClients = resp.data.paginated_clients;
+          });
+      }
     },
     goToCreateClient() {
       this.$router.push({ name: 'client-create' });
@@ -123,6 +146,9 @@ export default {
           this.closeDeleteConfirmationModal();
           this.loadClients();
         });
+    },
+    searchClient() {
+      this.loadClients();
     }
   },
   created() {

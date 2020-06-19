@@ -2694,6 +2694,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2704,7 +2719,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       paginatedClients: {},
       selectedClient: {},
-      isDeleteConfirmationModalVisible: false
+      isDeleteConfirmationModalVisible: false,
+      searchQuery: ""
     };
   },
   methods: {
@@ -2712,9 +2728,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].list(page).then(function (resp) {
-        _this.paginatedClients = resp.data.paginated_clients;
-      });
+
+      if (!this.searchQuery) {
+        _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].list(page).then(function (resp) {
+          _this.paginatedClients = resp.data.paginated_clients;
+        });
+      } else {
+        _services_client_service__WEBPACK_IMPORTED_MODULE_0__["default"].search(this.searchQuery, page).then(function (resp) {
+          _this.paginatedClients = resp.data.paginated_clients;
+        });
+      }
     },
     goToCreateClient: function goToCreateClient() {
       this.$router.push({
@@ -2753,6 +2776,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.loadClients();
       });
+    },
+    searchClient: function searchClient() {
+      this.loadClients();
     }
   },
   created: function created() {
@@ -60946,20 +60972,90 @@ var render = function() {
       _c("section", { staticClass: "content" }, [
         _c("div", { staticClass: "box" }, [
           _c("div", { staticClass: "box-header with-border" }, [
-            _c("div", { staticClass: "box-tools" }, [
+            _c("div", { staticClass: "row" }, [
               _c(
-                "button",
+                "div",
                 {
-                  staticClass: "btn btn-block btn-success btn-flat",
-                  attrs: { type: "button", title: "Cadastrar Cliente" },
-                  on: {
-                    click: function($event) {
-                      return _vm.goToCreateClient()
-                    }
-                  }
+                  staticClass: "col-xs-12 col-sm-3 pull-right",
+                  staticStyle: { "margin-bottom": "5px" }
                 },
-                [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Cadastrar")]
-              )
+                [
+                  _c("div", { staticClass: "box-tools" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-block btn-success btn-flat",
+                        attrs: { type: "button", title: "Cadastrar Cliente" },
+                        on: {
+                          click: function($event) {
+                            return _vm.goToCreateClient()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-plus" }),
+                        _vm._v(" Cadastrar")
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-xs-12 col-sm-9" }, [
+                _c("div", { staticClass: "box-tools" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "input-group",
+                      staticStyle: { width: "100%" }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.searchQuery,
+                            expression: "searchQuery"
+                          }
+                        ],
+                        staticClass: "form-control pull-right",
+                        attrs: {
+                          type: "text",
+                          name: "search_query",
+                          placeholder:
+                            "Pesquise clientes pelo nome ou data de nascimento..."
+                        },
+                        domProps: { value: _vm.searchQuery },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.searchQuery = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group-btn" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default btn-flat",
+                            attrs: { type: "button", title: "Pesquisar" },
+                            on: {
+                              click: function($event) {
+                                return _vm.searchClient()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-search" })]
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -78929,13 +79025,33 @@ function destroy(id) {
     });
   });
 }
+/**
+ * Sends a GET request for searching clients.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {string} query 
+ * @param  {int} page 
+ * @return {Promise}
+ */
+
+
+function search(query, page) {
+  return new Promise(function (resolve, reject) {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get("clients/search?query=".concat(query, "&page=").concat(page)).then(function (resp) {
+      resolve(resp);
+    })["catch"](function (err) {
+      reject(err);
+    });
+  });
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   list: list,
   store: store,
   getById: getById,
   update: update,
-  destroy: destroy
+  destroy: destroy,
+  search: search
 });
 
 /***/ }),
