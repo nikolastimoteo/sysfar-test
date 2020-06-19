@@ -128,6 +128,7 @@ class ClientController extends Controller
     /**
      * Searches for a client that matches the query.
      * 
+     * @author Níkolas Timóteo <nikolastps@hotmail.com>
      * @param string $query
      * @param int $page
      * @return \Illuminate\Http\Response

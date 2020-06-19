@@ -112,10 +112,31 @@ function destroy(id) {
   });
 }
 
+/**
+ * Sends a GET request for searching clients.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {string} query 
+ * @param  {int} page 
+ * @return {Promise}
+ */
+function search(query, page) {
+  return new Promise((resolve, reject) => {
+    Vue.axios.get(`clients/search?query=${query}&page=${page}`)
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
 export default {
   list,
   store,
   getById,
   update,
-  destroy
+  destroy,
+  search
 }
