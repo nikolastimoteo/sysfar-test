@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\v1\CreateClientFormRequest;
+use App\Http\Requests\API\v1\EditClientFormRequest;
 use App\Http\Resources\Client as ClientResource;
 use App\Client;
 
@@ -37,14 +38,14 @@ class ClientController extends Controller
         $client = Client::create([
             'name'       => $request->name,
             'email'      => $request->email,
-            'birth_date' => date('Y-m-d', strtotime($request->birth_date)),
-            'phone'      => $request->phone
+            'birth_date' => $request->birth_date ? date('Y-m-d', strtotime($request->birth_date)) : null,
+            'phone'      => $request->phone ? $request->phone : null
         ]);
 
         return response()->json([
             'message' => 'Cliente cadastrado.',
             'client'  => new ClientResource($client)
-        ]);
+        ], 201);
     }
 
     /**
@@ -72,13 +73,32 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @author Níkolas Timóteo <nikolastps@hotmail.com>
+     * @param  \Illuminate\Http\EditClientFormRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditClientFormRequest $request, $id)
     {
-        //
+        $client = Client::find($id);
+
+        if ($client) {
+            $client->update([
+                'name'       => $request->name,
+                'email'      => $request->email,
+                'birth_date' => $request->birth_date ? date('Y-m-d', strtotime($request->birth_date)) : null,
+                'phone'      => $request->phone ? $request->phone : null
+            ]);
+    
+            return response()->json([
+                'message' => 'Cliente alterado.',
+                'client'  => new ClientResource($client)
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Cliente não encontrado.'
+        ], 404);
     }
 
     /**
