@@ -65,8 +65,37 @@ function getById(id) {
   });
 }
 
+/**
+ * Sends a PUT request for updating a client.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {int} id
+ * @param  {string} name
+ * @param  {string} email
+ * @param  {string} birth_date 
+ * @param  {string} phone 
+ * @return {Promise}
+ */
+function update(id, name, email, birth_date, phone) {
+  return new Promise((resolve, reject) => {
+    Vue.axios.put(`clients/${id}`, {
+        name,
+        email,
+        birth_date,
+        phone
+      })
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
 export default {
   list,
   store,
-  getById
+  getById,
+  update
 }
