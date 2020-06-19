@@ -9,13 +9,13 @@ import Vue from "vue";
  */
 function list(page) {
   return new Promise((resolve, reject) => {
-      Vue.axios.get(`clients?page=${page}`)
-          .then(resp => {
-              resolve(resp);
-          })
-          .catch(err => {
-              reject(err);
-          });
+    Vue.axios.get(`clients?page=${page}`)
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
   });
 }
 
@@ -46,7 +46,27 @@ function store(name, email, birth_date, phone) {
   });
 }
 
+/**
+ * Sends a GET request for getting a client by its ID.
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {int} id 
+ * @return {Promise}
+ */
+function getById(id) {
+  return new Promise((resolve, reject) => {
+    Vue.axios.get(`clients/${id}`)
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
 export default {
   list,
-  store
+  store,
+  getById
 }
