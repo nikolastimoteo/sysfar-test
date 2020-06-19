@@ -7,6 +7,7 @@ import EmptyRouterView from "./components/EmptyRouterView.vue";
 // Public pages
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
+import Error404 from "./pages/Error404.vue";
 // Admin pages
 import ClientList from "./pages/admin-section/clients/ClientList.vue";
 import ClientCreate from "./pages/admin-section/clients/ClientCreate.vue";
@@ -83,6 +84,15 @@ export const router = new VueRouter({
 					]
         }
       ]
-    }
+    },
+    {
+			path: '/404',
+			name: 'error-404',
+			component: Error404
+		},
+		{
+			path: '/*',
+			redirect: '404'
+		}
   ]
 });

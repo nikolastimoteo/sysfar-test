@@ -2,7 +2,6 @@ require("./bootstrap");
 import Vue from "vue";
 import VueAxios from "vue-axios";
 import moment from "moment";
-//import VueMask from "v-mask";
 import VueTheMask from "vue-the-mask";
 import App from "./components/App.vue";
 import { router } from "./router";
@@ -10,6 +9,7 @@ import { store } from "./store";
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
 import { required, email, regex, min } from "vee-validate/dist/rules";
 import LaraveVuePagination from "laravel-vue-pagination";
+import VuePageTransition from "vue-page-transition";
 
 // Axios Config
 const axiosInstance = axios.create({
@@ -76,11 +76,18 @@ Vue.filter("birthDate", function (date) {
   return moment(date).format("DD/MM/YYYY");
 });
 
-// VueMask
-//Vue.use(VueMask);
-
 // VueTheMask
 Vue.use(VueTheMask);
+
+// VuePageTransition
+Vue.use(VuePageTransition);
+
+// Production config
+if (process.env.NODE_ENV === "production") {
+  Vue.config.devtools = false;
+  Vue.config.debug = false;
+  Vue.config.silent = true;
+}
 
 new Vue({
   el: "#app",
