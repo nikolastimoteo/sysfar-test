@@ -1,0 +1,90 @@
+<template>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Clientes
+        <small>Visualização</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li>
+          <a href="#">
+            <i class="fa fa-dashboard"></i> Dashboard
+          </a>
+        </li>
+        <li>
+          <router-link :to="{ name: 'client-list' }">Clientes</router-link>
+        </li>
+        <li class="active">Visualização</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Dados do Cliente</h3>
+        </div>
+					<!-- /.box-header -->
+					<div class="box-body">
+							<div class="form-group">
+								<label class="control-label" for="name">Nome Completo</label>
+								<input type="text" class="form-control" id="name" v-model="client.name" placeholder="Não informado" disabled />
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="email">E-mail</label>
+								<input type="email" class="form-control" id="email" v-model="client.email" placeholder="Não informado" disabled />
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="birth_date">Data de Nascimento</label>
+								<input type="text" class="form-control" id="birth_date" v-model="client.birth_date" placeholder="Não informado" disabled />
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="phone">Telefone</label>
+								<input type="text" class="form-control" id="phone" v-model="client.phone" placeholder="Não informado" disabled />
+							</div>
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<button type="button" class="btn btn-flat btn-default" @click="$router.back()" title="Voltar">Voltar</button>
+						<button type="submit" class="btn btn-flat btn-warning pull-right" title="Editar">Editar</button>
+					</div>
+					<!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</template>
+
+<script>
+import clientService from "../../../services/client.service";
+
+export default {
+	data() {
+		return {
+			client: {}
+		}
+	},
+	methods: {
+		loadClient() {
+			clientService.getById(this.$route.params.id)
+				.then(resp => {
+					this.client = resp.data.client;
+					if (this.client.birth_date) {
+						this.client.birth_date = this.$options.filters.birthDateAndAge(this.client.birth_date);
+					}
+				})
+				.catch(err => {
+					this.$router.back();
+				});
+			}
+	},
+	created() {
+		this.loadClient();
+	}
+}
+</script>

@@ -45,7 +45,7 @@
                 <td>{{ client.phone ? client.phone : "(Não informado)" }}</td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-flat" title="Visualizar Cliente"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn btn-primary btn-flat" @click="goToShowClient(client.id)" title="Visualizar Cliente"><i class="fa fa-eye"></i></button>
                     <button type="button" class="btn btn-warning btn-flat" title="Editar Cliente"><i class="fa fa-edit"></i></button>
                     <button type="button" class="btn btn-danger btn-flat" title="Excluir Cliente"><i class="fa fa-trash"></i></button>
                   </div>
@@ -85,6 +85,9 @@ export default {
     },
     goToCreateClient() {
       this.$router.push({ name: 'client-create' });
+    },
+    goToShowClient(id) {
+      this.$router.push({ name: 'client-show', params: { id: id } });
     }
   },
   created() {
