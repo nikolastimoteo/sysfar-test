@@ -13,11 +13,16 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @author Níkolas Timóteo <nikolastps@hotmail.com>
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $clients = Client::paginate(20);
+
+        return response()->json([
+            'paginated_clients' => $clients
+        ]);
     }
 
     /**

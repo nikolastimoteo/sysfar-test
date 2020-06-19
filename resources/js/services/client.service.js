@@ -1,6 +1,25 @@
 import Vue from "vue";
 
 /**
+ * Sends a GET request for getting the clients [PER PAGE].
+ * 
+ * @author Níkolas Timóteo <nikolastps@hotmail.com>
+ * @param  {int} page
+ * @return {Promise}
+ */
+function list(page) {
+  return new Promise((resolve, reject) => {
+      Vue.axios.get(`clients?page=${page}`)
+          .then(resp => {
+              resolve(resp);
+          })
+          .catch(err => {
+              reject(err);
+          });
+  });
+}
+
+/**
  * Sends a POST request for creating a new client.
  * 
  * @author Níkolas Timóteo <nikolastps@hotmail.com>
@@ -28,5 +47,6 @@ function store(name, email, birth_date, phone) {
 }
 
 export default {
+  list,
   store
 }
