@@ -42,9 +42,9 @@ Execute as migrações e *seeders* do projeto com o comando:
 php artisan migrate --seed
 ```
 
-Execute a compilação contínua do front-end com o comando:
+Execute a compilação do front-end com o comando:
 ``` bash
-npm run watch
+npm run dev
 ```
 
 Execute o servidor de teste com o comando:
