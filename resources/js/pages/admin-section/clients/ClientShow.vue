@@ -30,31 +30,42 @@
             <button type="button" class="btn btn-flat btn-danger" @click="showDeleteConfirmationModal()" title="Excluir">Excluir</button>
           </div>
         </div>
-					<!-- /.box-header -->
-					<div class="box-body">
-							<div class="form-group">
-								<label class="control-label" for="name">Nome Completo</label>
-								<input type="text" class="form-control" id="name" v-model="client.name" placeholder="Não informado" disabled />
-							</div>
-							<div class="form-group">
-								<label class="control-label" for="email">E-mail</label>
-								<input type="email" class="form-control" id="email" v-model="client.email" placeholder="Não informado" disabled />
-							</div>
-							<div class="form-group">
-								<label class="control-label" for="birth_date">Data de Nascimento</label>
-								<input type="text" class="form-control" id="birth_date" v-model="client.birth_date" placeholder="Não informado" disabled />
-							</div>
-							<div class="form-group">
-								<label class="control-label" for="phone">Telefone</label>
-								<input type="text" class="form-control" id="phone" v-model="client.phone" placeholder="Não informado" disabled />
-							</div>
-					</div>
-					<!-- /.box-body -->
-					<div class="box-footer">
-						<button type="button" class="btn btn-flat btn-default" @click="$router.back()" title="Voltar">Voltar</button>
-						<button type="submit" class="btn btn-flat btn-warning pull-right" @click="goToEditClient(client.id)" title="Editar">Editar</button>
-					</div>
-					<!-- /.box-footer-->
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div v-if="isPageLoading" class="text-center">
+            <div class="spinner"><div></div><div></div><div></div><div></div></div>
+          </div>
+          <div v-else-if="client">
+            <div class="form-group">
+              <label class="control-label" for="name">Nome Completo</label>
+              <input type="text" class="form-control" id="name" v-model="client.name" placeholder="Não informado" disabled />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="email">E-mail</label>
+              <input type="email" class="form-control" id="email" v-model="client.email" placeholder="Não informado" disabled />
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="control-label" for="birth_date">Data de Nascimento</label>
+                  <input type="text" class="form-control" id="birth_date" v-model="client.birth_date" placeholder="Não informado" disabled />
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label class="control-label" for="phone">Telefone</label>
+                  <input type="text" class="form-control" id="phone" v-model="client.phone" placeholder="Não informado" disabled />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button type="button" class="btn btn-flat btn-default" @click="$router.back()" title="Voltar">Voltar</button>
+          <button type="submit" class="btn btn-flat btn-warning pull-right" @click="goToEditClient(client.id)" title="Editar">Editar</button>
+        </div>
+        <!-- /.box-footer-->
       </div>
       <!-- /.box -->
     </section>
@@ -81,7 +92,8 @@ export default {
 	data() {
 		return {
       client: {},
-      isDeleteConfirmationModalVisible: false
+      isDeleteConfirmationModalVisible: false,
+      isPageLoading: true
 		}
 	},
 	methods: {
@@ -105,7 +117,10 @@ export default {
             });
           }
 					this.$router.back();
-				});
+        })
+        .finally(() => {
+          this.isPageLoading = false;
+        });
     },
     goToEditClient(id) {
       this.$router.push({ name: 'client-edit', params: { id: id } });

@@ -41,7 +41,10 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-          <table class="table table-hover table-bordered">
+          <div v-if="isPageLoading" class="text-center">
+            <div class="spinner"><div></div><div></div><div></div><div></div></div>
+          </div>
+          <table v-else-if="paginatedClients.data[0]" class="table table-hover table-bordered">
             <thead>
               <tr>
                 <th>Nome</th>
@@ -68,6 +71,9 @@
               </tr>
             </tbody>
           </table>
+          <div v-else class="text-center">
+            <h4>Nenhum cliente encontrado.</h4>
+          </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
@@ -106,20 +112,28 @@ export default {
       paginatedClients: {},
       selectedClient: {},
       isDeleteConfirmationModalVisible: false,
-      searchQuery: ""
+      searchQuery: "",
+      isPageLoading: true
     }
   },
   methods: {
     loadClients(page = 1) {
+      this.isPageLoading = true;
       if (!this.searchQuery) {
         clientService.list(page)
           .then(resp => {
             this.paginatedClients = resp.data.paginated_clients;
+          })
+          .finally(() => {
+            this.isPageLoading = false;
           });
       } else {
         clientService.search(this.searchQuery, page)
           .then((resp) => {
             this.paginatedClients = resp.data.paginated_clients;
+          })
+          .finally(() => {
+            this.isPageLoading = false;
           });
       }
     },
@@ -142,9 +156,38 @@ export default {
     },
     deleteClient() {
       clientService.destroy(this.selectedClient.id)
-        .then(() => {
+        .then(resp => {
           this.closeDeleteConfirmationModal();
+          this.$notify({
+            group: "geral",
+            type: "success",
+            title: "Sucesso!",
+            text: resp.data.message,
+            duration: 5000,
+            speed: 1000
+          });
           this.loadClients();
+        })
+        .catch(err => {
+          if(err.response && err.response.data.message) {
+            this.$notify({
+              group: "geral",
+              type: "error",
+              title: "Erro!",
+              text: err.response.data.message,
+              duration: 5000,
+              speed: 1000
+            });
+          } else {
+            this.$notify({
+              group: "geral",
+              type: "error",
+              title: "Erro!",
+              text: "Erro ao excluir cliente. Tente novamente!",
+              duration: 5000,
+              speed: 1000
+            });
+          }
         });
     },
     searchClient() {

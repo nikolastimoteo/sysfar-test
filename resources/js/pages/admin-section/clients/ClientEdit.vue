@@ -27,46 +27,57 @@
         <div class="box-header with-border">
           <h3 class="box-title">Dados do Cliente</h3>
         </div>
+        <!-- /.box-header -->
         <ValidationObserver ref="form" v-slot="{ handleSubmit, invalid }">
           <form autocomplete="off" @submit.prevent="handleSubmit(updateClient)">
-            <!-- /.box-header -->
             <div class="box-body">
-              <ValidationProvider v-slot="{ errors }" vid="name" name="name" rules="required|min:3">
-                <div class="form-group" :class="{ 'has-error': errors[0] }">
-                  <label class="control-label" for="name">Nome Completo</label>
-                  <input type="text" class="form-control" id="name" v-model="form.name" placeholder="Digite o nome completo do cliente" />
-                  <span v-if="errors" class="help-block">
-                    {{ errors[0] }}
-                  </span>
+              <div v-if="isPageLoading" class="text-center">
+                <div class="spinner"><div></div><div></div><div></div><div></div></div>
+              </div>
+              <div v-else-if="form.id">
+                <ValidationProvider v-slot="{ errors }" vid="name" name="name" rules="required|min:3">
+                  <div class="form-group" :class="{ 'has-error': errors[0] }">
+                    <label class="control-label" for="name">Nome Completo</label>
+                    <input type="text" class="form-control" id="name" v-model="form.name" placeholder="Digite o nome completo do cliente" />
+                    <span v-if="errors" class="help-block">
+                      {{ errors[0] }}
+                    </span>
+                  </div>
+                </ValidationProvider>
+                <ValidationProvider v-slot="{ errors }" vid="email" name="email" rules="required|email">
+                  <div class="form-group" :class="{ 'has-error': errors[0] }">
+                    <label class="control-label" for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" v-model="form.email" placeholder="Digite o e-mail do cliente" />
+                    <span v-if="errors" class="help-block">
+                      {{ errors[0] }}
+                    </span>
+                  </div>
+                </ValidationProvider>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <ValidationProvider v-slot="{ errors }" vid="birth_date" name="birth_date" rules="date_format:dd/MM/yyyy">
+                      <div class="form-group" :class="{ 'has-error': errors[0] }">
+                        <label class="control-label" for="birth_date">Data de Nascimento</label>
+                        <input type="tel" class="form-control" id="birth_date" v-mask="'##/##/####'" v-model="form.birth_date" placeholder="Digite a data de nascimento do cliente" />
+                        <span v-if="errors" class="help-block">
+                          {{ errors[0] }}
+                        </span>
+                      </div>
+                    </ValidationProvider>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <ValidationProvider v-slot="{ errors }" vid="phone" name="phone" :rules="{ regex: /\+\d{2}\s\(\d{2}\)\s\d{4,5}\-\d{4}/ }">
+                      <div class="form-group" :class="{ 'has-error': errors[0] }">
+                        <label class="control-label" for="phone">Telefone</label>
+                        <input type="tel" class="form-control" id="phone"  v-mask="['+55 (##) ####-####', '+55 (##) #####-####']" v-model="form.phone" placeholder="Digite o telefone do cliente" />
+                        <span v-if="errors" class="help-block">
+                          {{ errors[0] }}
+                        </span>
+                      </div>
+                    </ValidationProvider>
+                  </div>
                 </div>
-              </ValidationProvider>
-              <ValidationProvider v-slot="{ errors }" vid="email" name="email" rules="required|email">
-                <div class="form-group" :class="{ 'has-error': errors[0] }">
-                  <label class="control-label" for="email">E-mail</label>
-                  <input type="email" class="form-control" id="email" v-model="form.email" placeholder="Digite o e-mail do cliente" />
-                  <span v-if="errors" class="help-block">
-                    {{ errors[0] }}
-                  </span>
-                </div>
-              </ValidationProvider>
-              <ValidationProvider v-slot="{ errors }" vid="birth_date" name="birth_date" rules="date_format:dd/MM/yyyy">
-                <div class="form-group" :class="{ 'has-error': errors[0] }">
-                  <label class="control-label" for="birth_date">Data de Nascimento</label>
-                  <input type="tel" class="form-control" id="birth_date" v-mask="'##/##/####'" v-model="form.birth_date" placeholder="Digite a data de nascimento do cliente" />
-                  <span v-if="errors" class="help-block">
-                    {{ errors[0] }}
-                  </span>
-                </div>
-              </ValidationProvider>
-              <ValidationProvider v-slot="{ errors }" vid="phone" name="phone" :rules="{ regex: /\+\d{2}\s\(\d{2}\)\s\d{4,5}\-\d{4}/ }">
-                <div class="form-group" :class="{ 'has-error': errors[0] }">
-                  <label class="control-label" for="phone">Telefone</label>
-                  <input type="tel" class="form-control" id="phone"  v-mask="['+55 (##) ####-####', '+55 (##) #####-####']" v-model="form.phone" placeholder="Digite o telefone do cliente" />
-                  <span v-if="errors" class="help-block">
-                    {{ errors[0] }}
-                  </span>
-                </div>
-              </ValidationProvider>
+              </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
@@ -98,7 +109,8 @@ export default {
           birth_date: "",
           phone: ""
         },
-        loading: false
+        loading: false,
+        isPageLoading: true
       }
     },
     methods: {
@@ -124,6 +136,9 @@ export default {
               });
             }
             this.$router.back();
+          })
+          .finally(() => {
+            this.isPageLoading = false;
           });
       },
       updateClient() {
@@ -133,7 +148,6 @@ export default {
 
         clientService.update(id, name, email, birth_date, phone)
           .then(resp => {
-            this.loading = false;
             this.$notify({
               group: "geral",
               type: "success",
@@ -145,7 +159,6 @@ export default {
             this.$router.push({ name: 'client-list' });
           })
           .catch(err => {
-            this.loading = false;
             if(err.response && err.response.data.errors) {
               this.$refs.form.setErrors(err.response.data.errors);
             } else {
@@ -158,6 +171,9 @@ export default {
                 speed: 1000
               });
             }
+          })
+          .finally(() => {
+            this.loading = false;
           });
       }
     },

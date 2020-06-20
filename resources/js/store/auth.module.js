@@ -55,14 +55,14 @@ export const auth = {
           authService
             .logout()
             .then(resp => {
+              localStorage.removeItem("user-token");
+              commit("reset_state");
               resolve(resp);
             })
             .catch(err => {
-              reject(err);
-            })
-            .finally(() => {
               localStorage.removeItem("user-token");
               commit("reset_state");
+              reject(err);
             });
         });
       }

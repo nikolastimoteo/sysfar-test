@@ -71,7 +71,6 @@ export default {
       this.$store
         .dispatch("auth/login", { email, password })
         .then(() => {
-          this.loading = false;
           this.$router.push({ name: "client-list" });
         })
         .catch(err => {
@@ -89,6 +88,8 @@ export default {
               });
             }
           }
+        })
+        .finally(() => {
           this.loading = false;
         });
     }
