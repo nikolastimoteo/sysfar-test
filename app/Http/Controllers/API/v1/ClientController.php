@@ -19,7 +19,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::orderBy('name', 'ASC')->paginate(20);
+        $clients = Client::orderBy('name', 'ASC')->paginate(10);
 
         return response()->json([
             'paginated_clients' => $clients
@@ -139,9 +139,9 @@ class ClientController extends Controller
             $clients = Client::where(function($query) use ($search) {
                 $query->where('name', 'LIKE', '%'.$search.'%')
                 ->orWhere('birth_date', date('Y-m-d', strtotime(str_replace('/', '-', $search))));
-            })->orderBy('name', 'ASC')->paginate(20);
+            })->orderBy('name', 'ASC')->paginate(10);
         } else {
-            $clients = Client::paginate(20);
+            $clients = Client::paginate(10);
         }
         
         return response()->json([

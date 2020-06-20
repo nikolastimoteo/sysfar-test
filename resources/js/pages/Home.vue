@@ -55,7 +55,7 @@
 export default {
   data() {
     return {
-      appName: process.env.MIX_APP_NAME
+      appName:  process.env.MIX_APP_NAME ? process.env.MIX_APP_NAME : "Teste SysFar",
     };
   },
   computed: {
